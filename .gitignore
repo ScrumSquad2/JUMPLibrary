@@ -71,3 +71,8 @@ local.properties
 .sts4-cache/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
+
+##############################################################################################
+# We're ignoring any changes to our project's ConnectionManager.
+# Reason for this is we have a mix of Mac and Windows users and the DB access urls are going to be different.
+src/main/java/com/cognixia/jump/connection/ConnectionManager.java
