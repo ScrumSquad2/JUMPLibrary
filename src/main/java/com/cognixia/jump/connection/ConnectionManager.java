@@ -1,4 +1,4 @@
-package com.congixia.jump.connection;
+package com.cognixia.jump.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
