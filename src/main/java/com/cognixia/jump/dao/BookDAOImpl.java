@@ -118,7 +118,7 @@ public class BookDAOImpl implements BookDAO {
 			
 			pstmt.setString(1, book.getTitle());
 			pstmt.setString(2, book.getDesc());
-			pstmt.setBoolean(3, book.isRented());
+			pstmt.setBoolean(3, book.getRented());
 			pstmt.setDate(4, book.getAddedToLibrary());
 			pstmt.setString(5, book.getIsbn());
 			

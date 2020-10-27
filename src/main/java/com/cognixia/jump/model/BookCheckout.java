@@ -3,6 +3,8 @@ package com.cognixia.jump.model;
 import java.sql.Date;
 
 public class BookCheckout {
+	
+	int id;
 
     private int patronId;
 
@@ -14,7 +16,10 @@ public class BookCheckout {
 
     private Date returnedDate;
 
-    public BookCheckout(int patronId, String isbn, Date checkoutDate, Date dueDate, Date returnedDate){
+    public BookCheckout(int id, int patronId, String isbn, Date checkoutDate, Date dueDate, Date returnedDate){
+    	
+    	this.id = id;
+    	
         this.patronId = patronId;
 
         this.isbn = isbn;
@@ -25,8 +30,22 @@ public class BookCheckout {
 
         this.returnedDate = returnedDate;
     }
+    
+    
 
-    public int getPatronId(){
+    public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public int getPatronId(){
         return this.patronId;
     }
 

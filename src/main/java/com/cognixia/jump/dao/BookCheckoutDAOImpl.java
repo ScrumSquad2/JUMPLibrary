@@ -23,7 +23,7 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 		
 		ResultSet rs = null;
 		try (PreparedStatement pstmt = conn.prepareStatement("select * from book_checkout where patron_id = ?")) {
-			pstmt.setInt(1, patron.getId());
+			pstmt.setInt(1, patron.getPatronId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("checkout_id");
@@ -53,7 +53,7 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 		ResultSet rs = null;
 		try (PreparedStatement pstmt = conn.prepareStatement("select * from book_checkout "
 				+ "where patron_id = ? and returned is null")) {
-			pstmt.setInt(1, patron.getId());
+			pstmt.setInt(1, patron.getPatronId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("checkout_id");

@@ -82,7 +82,7 @@ public class PatronDAOImpl implements PatronDAO {
 			pstmt.setString(2, patron.getLastName());
 			pstmt.setString(3, patron.getUserName());
 			pstmt.setString(4, patron.getPassword());
-			pstmt.setBoolean(5, patron.isAccountFrozen());
+			pstmt.setBoolean(5, patron.getAccountFrozen());
 			
 			int updated = pstmt.executeUpdate();
 			if (updated == 1) {
@@ -125,8 +125,8 @@ public class PatronDAOImpl implements PatronDAO {
 			pstmt.setString(2, patron.getLastName());
 			pstmt.setString(3, patron.getUserName());
 			pstmt.setString(4, patron.getPassword());
-			pstmt.setBoolean(5, patron.isAccountFrozen());
-			pstmt.setInt(6, patron.getId());
+			pstmt.setBoolean(5, patron.getAccountFrozen());
+			pstmt.setInt(6, patron.getPatronId());
 			
 			int updated = pstmt.executeUpdate();
 			if (updated == 1) {
