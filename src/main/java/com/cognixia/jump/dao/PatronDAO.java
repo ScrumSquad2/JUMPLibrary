@@ -8,7 +8,7 @@ public interface PatronDAO {
 	
 	public List<Patron> getAllPatrons();
 	
-	public Patron getPatronById(int id);
+	public Patron getPatronById(int id) throws ItemNotFoundInDatabaseException;
 	
 	public boolean addPatron(Patron patron);
 	
