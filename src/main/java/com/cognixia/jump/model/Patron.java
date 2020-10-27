@@ -11,7 +11,7 @@ public class Patron {
     private String password;
     private boolean accountFrozen;
 
-    public Patron(int patronId, String fistName, String lastName, String userName, String password, boolean accountFrozen){
+    public Patron(int patronId, String firstName, String lastName, String userName, String password, boolean accountFrozen){
         this.patronId = patronId;
         this.firstName = firstName;
         this.lastName = lastName;
