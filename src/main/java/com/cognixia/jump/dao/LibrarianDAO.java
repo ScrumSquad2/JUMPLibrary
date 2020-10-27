@@ -14,6 +14,6 @@ public interface LibrarianDAO {
 	
 	public boolean deleteLibrarianByUser(String user);
 	
-	public boolean updateLibrarian(Librarian libr);
+	public boolean updateLibrarian(Librarian libr) throws UsernameAlreadyExistsException;
 
 }

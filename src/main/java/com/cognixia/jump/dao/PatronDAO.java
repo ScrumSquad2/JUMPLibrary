@@ -14,6 +14,6 @@ public interface PatronDAO {
 	
 	public boolean deletePatronById(int id);
 	
-	public boolean updatePatron(Patron patron);
+	public boolean updatePatron(Patron patron) throws UsernameAlreadyExistsException;
 
 }
