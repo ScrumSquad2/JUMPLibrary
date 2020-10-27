@@ -10,6 +10,8 @@ public interface PatronDAO {
 	
 	public Patron getPatronById(int id) throws ItemNotFoundInDatabaseException;
 	
+	public Patron getPatronByUser(String userName) throws ItemNotFoundInDatabaseException;
+	
 	public boolean addPatron(Patron patron) throws UsernameAlreadyExistsException;
 	
 	public boolean deletePatronById(int id);

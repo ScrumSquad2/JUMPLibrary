@@ -67,7 +67,12 @@ public class LibrarianDAOImpl implements LibrarianDAO {
 	}
 
 	@Override
-	public boolean addLibrarian(Librarian libr) {
+	public boolean addLibrarian(Librarian libr) throws UsernameAlreadyExistsException {
+		
+		if (UsernameChecker.doesDuplicateUsernameExist(libr)) {
+			throw new UsernameAlreadyExistsException(libr.getUserName(), "librarian");
+		}
+		
 		try (PreparedStatement pstmt = conn.prepareStatement("insert into librarian values(?,?,?)")) {
 			pstmt.setInt(1, libr.getLibrarianId());
 			pstmt.setString(2, libr.getUserName());
@@ -104,7 +109,12 @@ public class LibrarianDAOImpl implements LibrarianDAO {
 	}
 
 	@Override
-	public boolean updateLibrarian(Librarian libr) {
+	public boolean updateLibrarian(Librarian libr) throws UsernameAlreadyExistsException {
+		
+		if (UsernameChecker.doesDuplicateUsernameExist(libr)) {
+			throw new UsernameAlreadyExistsException(libr.getUserName(), "librarian");
+		}
+		
 		try (PreparedStatement pstmt = conn.prepareStatement("update librarian "
 				+ "set username = ?, "
 				+ "password = ? "

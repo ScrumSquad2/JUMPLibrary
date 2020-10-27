@@ -73,9 +73,42 @@ public class PatronDAOImpl implements PatronDAO {
 		throw new ItemNotFoundInDatabaseException(id, "patron");
 		
 	}
+	
+	public Patron getPatronByUser(String user) throws ItemNotFoundInDatabaseException {
+		
+		ResultSet rs = null;
+		try (PreparedStatement pstmt
+				= conn.prepareStatement("select * from patron where username = ?");
+			) {
+			pstmt.setString(1, user);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int id = rs.getInt("patron_id");
+				String firstName = rs.getString("first_name");
+				String lastName = rs.getString("last_name");
+				String userName = rs.getString("username");
+				String password = rs.getString("password");
+				boolean accountFrozen = rs.getBoolean("account_frozen");
+				
+				Patron patron = new Patron(id, firstName, lastName, userName, password, accountFrozen);
+				return patron;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		throw new ItemNotFoundInDatabaseException(user, "patron");
+		
+	}
 
 	@Override
-	public boolean addPatron(Patron patron) {
+	public boolean addPatron(Patron patron) throws UsernameAlreadyExistsException {
+		
+		if (UsernameChecker.doesDuplicateUsernameExist(patron)) {
+			throw new UsernameAlreadyExistsException(patron.getUserName(), "patron");
+		}
 
 		try(PreparedStatement pstmt = conn.prepareStatement("insert into patron values(null, ?,?,?,?,?)")) {
 			pstmt.setString(1, patron.getFirstName());
@@ -115,7 +148,11 @@ public class PatronDAOImpl implements PatronDAO {
 	}
 
 	@Override
-	public boolean updatePatron(Patron patron) {
+	public boolean updatePatron(Patron patron) throws UsernameAlreadyExistsException {
+		
+		if (UsernameChecker.doesDuplicateUsernameExist(patron)) {
+			throw new UsernameAlreadyExistsException(patron.getUserName(), "patron");
+		}
 
 		try (PreparedStatement pstmt = conn.prepareStatement("update patron"
 				+ " set first_name = ?, last_name = ?, username = ?,"
