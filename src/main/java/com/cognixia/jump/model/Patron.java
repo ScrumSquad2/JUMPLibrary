@@ -13,7 +13,7 @@ public class Patron {
 
     public Patron(int patronId, String fistName, String lastName, String userName, String password, boolean accountFrozen){
         this.patronId = patronId;
-        this.fistName = firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
@@ -60,11 +60,11 @@ public class Patron {
         this.accountFrozen = frozen;
     }
 
-    public int getpatronId(){
+    public int getPatronId(){
         return patronId;
     }
 
-    public void setpatronId(int patronId){
+    public void setPatronId(int patronId){
         this.patronId = patronId;
     }
 }
