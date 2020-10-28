@@ -90,6 +90,7 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 			
 			int count = pstmt.executeUpdate();
 			if (count == 1) {
+				changeRentedStatusOfBook(checkout.getIsbn(), true);
 				return true;
 			}
 			
@@ -111,6 +112,7 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 			
 			int count = pstmt.executeUpdate();
 			if (count == 1) {
+				changeRentedStatusOfBook(checkout.getIsbn(), false);
 				return true;
 			}
 			
@@ -119,6 +121,26 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 			e.printStackTrace();
 		}
 		
+		return false;
+	}
+	
+	public boolean changeRentedStatusOfBook(String isbn, boolean isRented) {
+		try (PreparedStatement pstmt = conn.prepareStatement("update book "
+				+ "set rented = ? "
+				+ "where isbn = ?")) {
+			
+			pstmt.setBoolean(1, isRented);
+			pstmt.setString(2, isbn);
+			
+			int count = pstmt.executeUpdate();
+			if(count == 1) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 
