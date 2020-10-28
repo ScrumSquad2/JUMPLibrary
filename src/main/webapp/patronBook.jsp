@@ -32,7 +32,7 @@
 							<c:out value="${ book.desc }"/>
 						</td>
 						
-						<c:when test="${ book.rented = FALSE }">
+						<c:when test="${ book.rented == FALSE }">
 						<td>
 							<c:out value="AVAILABLE"/>
 						</td>
@@ -45,7 +45,7 @@
 						</c:otherwise>
 						
 						
-						<c:when test="${ book.rented = FALSE }">
+						<c:when test="${ book.rented == FALSE }">
 						<td>
 							<a href="addCheckout?id=<c:out value='${ patron.patronId }' />">
 								<button class="btn btn-primary">Check Out</button>
