@@ -29,6 +29,7 @@ public class PatronServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private PatronDAO patronDAO;
     private BookCheckoutDAO bookCheckoutDAO;
+    private static Patron patron;
 	
 	@Override
 	public void init() {
@@ -42,13 +43,16 @@ public class PatronServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String action = request.getPathInfo();
-		System.out.println("action: " + action);
+		
 		switch(action) {
 		case "/addPatron":
 			insertPatron(request, response);
 			break;
 		case "/loginPatron":
 			loginPatron(request, response);
+			break;
+		case "/logoutPatron":
+			logoutPatron(request, response);
 			break;
 		case "/updatePatron":
 			updatePatron(request, response);
@@ -65,7 +69,7 @@ public class PatronServlet extends HttpServlet {
 			returnCheckout(request, response);
 			break;
 		default:
-			response.sendRedirect("/");
+			response.sendRedirect("/JUMPLibrary");
 			break ;
 		}
 		
@@ -81,10 +85,17 @@ public class PatronServlet extends HttpServlet {
 		boolean accountFrozen = false;
 		
 		try {
-			patronDAO.addPatron(
-					new Patron(0, firstName, lastName, userName, password, accountFrozen));
-			System.out.println("Sucess add " + userName);
+			Patron newPatron = new Patron(0, firstName, lastName, userName, password, accountFrozen);
+			patronDAO.addPatron(newPatron);
+			System.out.println("Sucess add " + patron);
+			patron = newPatron;
+			
+			request.setAttribute("patron", patron);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
+			System.out.println("send to dispatcher");
+			dispatcher.forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
+			response.sendRedirect("JUMPLibrary/signUp.jsp");
 			e.printStackTrace();
 		}
 	}
@@ -95,23 +106,30 @@ public class PatronServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		try {
-			Patron patron = patronDAO.getPatronByUser(userName);
+			 patron = patronDAO.getPatronByUser(userName);
 			if (!patron.getPassword().equals(password)) {
 				patron = null;
 				System.out.println("Invalid password");
-				response.sendRedirect("/");
+				response.sendRedirect("/JUMPLibrary");
 			} else {
-//				RequestDispatcher dispatcher = request.getRequestDispatcher("patron-form.jsp");
 				System.out.println("send");
-//				dispatcher.forward(request, response);
 				request.setAttribute("patron", patron);
-				request.getRequestDispatcher("patron-form.jsp").forward(request, response);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
+				System.out.println("send to dispatcher");
+				dispatcher.forward(request, response);
 			}
 		} catch (ItemNotFoundInDatabaseException e) {
 			e.printStackTrace();
 			System.out.println("Cannot found patron");
-			response.sendRedirect("/");
+			response.sendRedirect("/JUMPLibrary");
 		}
+	}
+	
+	private void logoutPatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (patron != null)
+			patron = null;
+		response.sendRedirect("/JUMPLibrary");
 	}
 	
 	private void updatePatron(HttpServletRequest request, HttpServletResponse response) 

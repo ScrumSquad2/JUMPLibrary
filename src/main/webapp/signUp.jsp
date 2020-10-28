@@ -19,7 +19,7 @@
 
 		<br>
 
-				<form action="addPatron" method="post">
+				<form action="patron/addPatron" method="post">
 			
 			<div class="form-group">
 				<label for="firstName">First Name</label>

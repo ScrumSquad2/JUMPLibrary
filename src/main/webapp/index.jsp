@@ -38,7 +38,7 @@
 		<form action="patron/loginPatron" method="post" >
 			<div class="form-group">
 				<label for="userName">User Name</label> 
-				<input type="text" class="form-control" id="userName" name="userName" required>
+				<input autocapitalize="off" autocorrect="off" type="text" class="form-control" id="userName" name="userName" required>
 			</div>
 			
 			<div class="form-group">
@@ -52,7 +52,7 @@
 			
 		</form>
 		
-				<form action="LibrarianLoginServletUrl" method="post" >
+				<form action="servlet/test" method="post" >
 		
 			<div class="form-group">
 				<label for="email">Email Address</label> 
