@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		<form action="patron" method="post" >
+<!-- 		<form action="patron" method="post" >
 		
 			<div class="form-group">
 				<label for="email">Email Address</label> 
@@ -27,6 +27,23 @@
 			<div class="form-group">
 				<label for="pw">Password</label> 
 				<input type="password" class="form-control" id="pw" name="pw" required>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Login as Patron</button>
+			<button onclick="window.location.href='signUp.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
+			<br><br>
+			
+		</form> -->
+		
+		<form action="patron/loginPatron" method="post" >
+			<div class="form-group">
+				<label for="userName">User Name</label> 
+				<input type="text" class="form-control" id="userName" name="userName" required>
+			</div>
+			
+			<div class="form-group">
+				<label for="password">Password</label> 
+				<input type="password" class="form-control" id="password" name="password" required>
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Login as Patron</button>

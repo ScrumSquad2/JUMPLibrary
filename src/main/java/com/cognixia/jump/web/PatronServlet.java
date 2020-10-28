@@ -23,13 +23,12 @@ import com.cognixia.jump.dao.UsernameAlreadyExistsException;
 import com.cognixia.jump.model.BookCheckout;
 import com.cognixia.jump.model.Patron;
 
-@WebServlet("/patron")
+@WebServlet("/patron/*")
 public class PatronServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
     private PatronDAO patronDAO;
     private BookCheckoutDAO bookCheckoutDAO;
-    private Patron patron;
 	
 	@Override
 	public void init() {
@@ -41,7 +40,9 @@ public class PatronServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		String action = request.getServletPath();
+		
+		String action = request.getPathInfo();
+		System.out.println("action: " + action);
 		switch(action) {
 		case "/addPatron":
 			insertPatron(request, response);
@@ -90,14 +91,21 @@ public class PatronServlet extends HttpServlet {
 	
 	private void loginPatron(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		System.out.println("login");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		try {
-			patron = patronDAO.getPatronByUser(userName);
+			Patron patron = patronDAO.getPatronByUser(userName);
 			if (!patron.getPassword().equals(password)) {
 				patron = null;
 				System.out.println("Invalid password");
 				response.sendRedirect("/");
+			} else {
+//				RequestDispatcher dispatcher = request.getRequestDispatcher("patron-form.jsp");
+				System.out.println("send");
+//				dispatcher.forward(request, response);
+				request.setAttribute("patron", patron);
+				request.getRequestDispatcher("patron-form.jsp").forward(request, response);
 			}
 		} catch (ItemNotFoundInDatabaseException e) {
 			e.printStackTrace();
