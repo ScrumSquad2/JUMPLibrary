@@ -29,8 +29,8 @@
 				<input type="password" class="form-control" id="pw" name="pw" required>
 			</div>
 			
-			<button type="submit" class="btn btn-primary">Login as patron</button>
-			<button onclick="window.location.href='signup.jsp' ;" type="button" class="btn btn-secondary">Sign up</button>
+			<button type="submit" class="btn btn-primary">Login as Patron</button>
+			<button onclick="window.location.href='signup.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
 			<br><br>
 			
 		</form>
@@ -47,7 +47,7 @@
 				<input type="password" class="form-control" id="pw" name="pw" required>
 			</div>
 			
-			<button type="submit" class="btn btn-primary">Login as librarian</button>
+			<button type="submit" class="btn btn-primary">Login as Librarian</button>
 		</form>
 
 	</div>
