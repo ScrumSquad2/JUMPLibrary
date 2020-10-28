@@ -2,8 +2,6 @@
 
 	<div class="container">
 		
-		<%-- if doing an update, a product object will be passed to this jsp --%>
-		<%-- if doing an insert, nothing will be passed to this jsp --%>
 		<br>
 
 				<h1 class="display-3">Update Profile</h1>
@@ -12,7 +10,7 @@
 
 				<form action="updatePatron" method="post">
 
-				<input type="hidden" name="id" value="<c:out value='${ patron.patronId }'/>">
+				<input type="hidden" name="patronId" value="<c:out value='${ patron.patronId }'/>">
 			
 			<div class="form-group">
 				<label for="firstName">First Name</label>
