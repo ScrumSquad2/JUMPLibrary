@@ -22,9 +22,11 @@
 		
 			<div class="navbar-nav">
 				 
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarianBook.jsp">Book</a> 
+				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarianBook.jsp">Book Catalog</a> 
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/librarianPatron.jsp">Patron</a>
+				
+				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarianAddBook.jsp">Add Book</a> 
 				
 			</div>
 
