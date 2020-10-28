@@ -52,7 +52,7 @@
 			</c:otherwise>
 				</c:choose>
 			</div>
-			<button type="submit" class="btn btn-primary">Login as
+			<button type="submit" class="btn btn-primary">Log In as
 				Patron</button>
 			<button onclick="window.location.href='patronSignup.jsp' ;"
 				type="button" class="btn btn-secondary">Sign Up</button>
@@ -73,7 +73,7 @@
 					class="form-control" id="pw" name="pw" required>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Login as
+			<button type="submit" class="btn btn-primary">Log In as
 				Librarian</button>
 		</form>
 
