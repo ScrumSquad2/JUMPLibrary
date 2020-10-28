@@ -47,7 +47,7 @@
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Login as Patron</button>
-			<button onclick="window.location.href='signUp.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
+			<button onclick="window.location.href='patronSignup.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
 			<br><br>
 			
 		</form>
