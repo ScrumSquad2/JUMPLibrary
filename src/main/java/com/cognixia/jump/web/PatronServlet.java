@@ -19,6 +19,7 @@ import com.cognixia.jump.dao.BookCheckoutDAOImpl;
 import com.cognixia.jump.dao.ItemNotFoundInDatabaseException;
 import com.cognixia.jump.dao.PatronDAO;
 import com.cognixia.jump.dao.PatronDAOImpl;
+import com.cognixia.jump.dao.UsernameAlreadyExistsException;
 import com.cognixia.jump.model.BookCheckout;
 import com.cognixia.jump.model.Patron;
 
@@ -28,6 +29,7 @@ public class PatronServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private PatronDAO patronDAO;
     private BookCheckoutDAO bookCheckoutDAO;
+    private Patron patron;
 	
 	@Override
 	public void init() {
@@ -43,6 +45,9 @@ public class PatronServlet extends HttpServlet {
 		switch(action) {
 		case "/addPatron":
 			insertPatron(request, response);
+			break;
+		case "/loginPatron":
+			loginPatron(request, response);
 			break;
 		case "/updatePatron":
 			updatePatron(request, response);
@@ -74,9 +79,31 @@ public class PatronServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		boolean accountFrozen = false;
 		
-		if (patronDAO.addPatron(
-				new Patron(0, firstName, lastName, userName, password, accountFrozen)))
+		try {
+			patronDAO.addPatron(
+					new Patron(0, firstName, lastName, userName, password, accountFrozen));
 			System.out.println("Sucess add " + userName);
+		} catch (UsernameAlreadyExistsException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void loginPatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
+		try {
+			patron = patronDAO.getPatronByUser(userName);
+			if (!patron.getPassword().equals(password)) {
+				patron = null;
+				System.out.println("Invalid password");
+				response.sendRedirect("/");
+			}
+		} catch (ItemNotFoundInDatabaseException e) {
+			e.printStackTrace();
+			System.out.println("Cannot found patron");
+			response.sendRedirect("/");
+		}
 	}
 	
 	private void updatePatron(HttpServletRequest request, HttpServletResponse response) 
@@ -88,9 +115,14 @@ public class PatronServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		boolean accountFrozen = false;
 		
-		if (patronDAO.updatePatron(
-				new Patron(patronId, firstName, lastName, userName, password, accountFrozen)))
+		try {
+			patronDAO.updatePatron(
+					new Patron(patronId, firstName, lastName, userName, password, accountFrozen));
 			System.out.println("Sucess update " + userName);
+		} catch (UsernameAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void listCurrent(HttpServletRequest request, HttpServletResponse response) 

@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-Manifest-Version: 1.0
-Built-By: kwame
-Build-Jdk: 14.0.2
-Created-By: Maven Integration for Eclipse
-
-=======
 Manifest-Version: 1.0
 Built-By: tfan
 Build-Jdk: 14.0.2
 Created-By: Maven Integration for Eclipse
 
->>>>>>> PatronServlet

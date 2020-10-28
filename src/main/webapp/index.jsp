@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		<form action="PatronLoginServletUrl" method="post" >
+		<form action="patron" method="post" >
 		
 			<div class="form-group">
 				<label for="email">Email Address</label> 
