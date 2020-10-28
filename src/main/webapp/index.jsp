@@ -30,7 +30,7 @@
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Login as patron</button>
-			
+			<button onclick="window.location.href='signup.jsp' ;" type="button" class="btn btn-secondary">Sign up</button>
 			<br><br>
 			
 		</form>
