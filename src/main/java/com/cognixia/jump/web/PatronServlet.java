@@ -45,6 +45,9 @@ public class PatronServlet extends HttpServlet {
 		String action = request.getPathInfo();
 		
 		switch(action) {
+		case "/newPatron":
+			newPatron(request, response);
+			break;
 		case "/addPatron":
 			insertPatron(request, response);
 			break;
@@ -75,6 +78,13 @@ public class PatronServlet extends HttpServlet {
 		
 	}
 	
+	private void newPatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronSignup.jsp");
+		System.out.println("send to dispatcher");
+		dispatcher.forward(request, response);
+	}
+	
 	private void insertPatron(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
@@ -95,7 +105,7 @@ public class PatronServlet extends HttpServlet {
 			System.out.println("send to dispatcher");
 			dispatcher.forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			response.sendRedirect("JUMPLibrary/signUp.jsp");
+			response.sendRedirect("patron/newPatron");
 			e.printStackTrace();
 		}
 	}

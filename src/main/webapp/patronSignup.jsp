@@ -100,12 +100,12 @@
 		<hr>
         <div class="form-group">
 			<div class="row">
-				<div class="col-xs-6"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
-				<div class="col-xs-6"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
+				<div class="col-xs-6"><input type="text" class="form-control" name="firstName" placeholder="First Name" required="required"></div>
+				<div class="col-xs-6"><input type="text" class="form-control" name="lastName" placeholder="Last Name" required="required"></div>
 			</div>        	
         </div>
         <div class="form-group">
-        	<input  class="form-control" name="username" placeholder="username" required="required">
+        	<input  class="form-control" name="userName" placeholder="username" required="required">
         </div>
 		<div class="form-group">
             <input type="password" class="form-control" name="password" placeholder="Password" required="required">
