@@ -23,7 +23,9 @@
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listAllBooks">Book</a>
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listCurrent">Return</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listCurrent">Current</a>
+				
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listReturned">History</a>
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patronProfile.jsp">Profile</a>
 				

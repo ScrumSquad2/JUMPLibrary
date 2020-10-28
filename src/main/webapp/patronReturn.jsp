@@ -1,52 +1,57 @@
-<%@ include file= "patronHeader.jsp" %>
+<%@ include file="patronHeader.jsp"%>
 
-	<div class="container">
-	
-		<br>
-		<h1 class="display-3">Book Return</h1>
-		<br>
-		
-		<table class="table table-striped">
-		
-			<thead>
+<div class="container">
+
+
+	<br>
+	<c:choose>
+		<c:when test="${ isHistory != true }">
+	<h1 class="display-3">Current Books</h1>
+		</c:when>
+		<c:otherwise>
+	<h1 class="display-3">History</h1>
+		</c:otherwise>
+
+	</c:choose>
+	<br>
+
+	<table class="table table-striped">
+
+		<thead>
+			<tr>
+				<th>ISBN</th>
+				<th>Checked out Date</th>
+				<th>Due Date</th>
+				<th>Return Date</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<c:forEach var="checkout" items="${bookCheckouts}">
 				<tr>
-					<th>ISBN</th>
-					<th>Checked out Date</th>
-					<th>Due Date</th>
-					<th>Return Date</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				
-					<tr>
-						<td>
-							<c:out value="${ checkout.isbn }"/>
-						</td>
-						<td>
-							<c:out value="${ checkout.checkoutDate }"/>
-						</td>
-						<td>
-							<c:out value="${ checkout.dueDate }"/>
-						</td>
-						<td>
-							<c:out value="${ checkout.returnedDate }"/>
-						</td>
-												
-						<c:when test="${ checkout.returnedDate != null }">
+					<td><c:out value="${ checkout.isbn }" /></td>
+					<td><c:out value="${ checkout.checkoutDate }" /></td>
+					<td><c:out value="${ checkout.dueDate }" /></td>
+					<td><c:out value="${ checkout.returnedDate }" /></td>
+					<c:if test="${ isHistory != true }">
+					<td><a
+						href="returnCheckout?id=<c:out value='${ checkout.id }' />">
+							<button class="btn btn-primary">Return</button>
+					</a></td>
+					</c:if>
+					<%-- 						<c:when test="${ checkout.returnedDate != null }">
 						<td>
 							<a href="addCheckout?id=<c:out value='${ checkout.checkoutID }' />">
 								<button class="btn btn-primary">Return</button>
 							</a>
 						</td>
-						</c:when>
-					</tr>
-	
-				
-			</tbody>
-		
-		</table>
-		
-	</div>
+						</c:when> --%>
+				</tr>
+			</c:forEach>
+		</tbody>
 
-<%@ include file= "footer.jsp" %>
+	</table>
+
+</div>
+
+<%@ include file="footer.jsp"%>

@@ -69,6 +69,7 @@ public class PatronServlet extends HttpServlet {
 			listCurrent(request, response);
 			break;
 		case "/listReturned":
+			listReturned(request, response);
 			break;
 		case "/addCheckout":
 			addCheckout(request, response);
@@ -117,6 +118,8 @@ public class PatronServlet extends HttpServlet {
 	
 	private void listAllBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
 		List<Book> allBooks = bookDAO.getAllBooks();
 		request.setAttribute("allBooks", allBooks);
 		System.out.println("allBooks: " + allBooks);
@@ -160,6 +163,8 @@ public class PatronServlet extends HttpServlet {
 	
 	private void updatePatron(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
 		int patronId = Integer.parseInt(request.getParameter("patronId"));
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
@@ -183,12 +188,29 @@ public class PatronServlet extends HttpServlet {
 			response.sendRedirect("/JUMPLibrary");
 		System.out.println("patronID: " + patron.getPatronId());
 		List<BookCheckout> bookCheckouts;
-		bookCheckouts = bookCheckoutDAO.getAllCheckouts(patron);
+		bookCheckouts = bookCheckoutDAO.getAllNonReturnedCheckouts(patron);
 		System.out.println("bookCheckouts: " + bookCheckouts);
 
 		request.setAttribute("bookCheckouts", bookCheckouts);
 		// TODO change to correct jsp
-		RequestDispatcher dispatcher = request.getRequestDispatcher("product-list.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronReturn.jsp");
+		System.out.println("send");
+		dispatcher.forward(request, response);
+	}
+	
+	private void listReturned(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
+		System.out.println("patronID: " + patron.getPatronId());
+		List<BookCheckout> bookCheckouts;
+		bookCheckouts = bookCheckoutDAO.getAllCheckouts(patron);
+		System.out.println("bookCheckouts: " + bookCheckouts);
+
+		request.setAttribute("isHistory", true);
+		request.setAttribute("bookCheckouts", bookCheckouts);
+		// TODO change to correct jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronReturn.jsp");
 		System.out.println("send");
 		dispatcher.forward(request, response);
 	}
@@ -211,9 +233,16 @@ public class PatronServlet extends HttpServlet {
 	
 	private void returnCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("checkoutID"));
-		if (bookCheckoutDAO.returnBookCheckout(new BookCheckout(id, 0, null, null, null, null)))
-			System.out.println("Sucess returned checkout " + id);
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
+		int id = Integer.parseInt(request.getParameter("id"));
+		try {
+				bookCheckoutDAO.returnBookCheckout(bookCheckoutDAO.getBookCheckoutById(id));
+				System.out.println("Sucess returned checkout " + id);
+		} catch (ItemNotFoundInDatabaseException e) {
+			e.printStackTrace();
+		}
+		listCurrent(request, response);
 	}
 	
 	@Override
