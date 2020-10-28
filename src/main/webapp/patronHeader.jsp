@@ -21,7 +21,7 @@
 
 			<div class="navbar-nav">
 					
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/listAllBooks">Book</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listAllBooks">Book</a>
 				
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/listAllBooks">Return</a>
 					

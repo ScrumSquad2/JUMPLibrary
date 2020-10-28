@@ -46,7 +46,7 @@ public class PatronServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String action = request.getPathInfo();
-		
+		System.out.println("action: " + action);
 		switch(action) {
 		case "/addPatron":
 			insertPatron(request, response);
@@ -178,10 +178,11 @@ public class PatronServlet extends HttpServlet {
 	
 	private void listCurrent(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		int patronId = Integer.parseInt(request.getParameter("patronId"));
+		if (patron == null) response.sendRedirect("/JUMPLibrary");
+		System.out.println("patronID: " + patron.getPatronId());
 		List<BookCheckout> bookCheckouts;
 		try {
-			bookCheckouts = bookCheckoutDAO.getAllCheckouts(patronDAO.getPatronById(patronId));
+			bookCheckouts = bookCheckoutDAO.getAllCheckouts(patronDAO.getPatronById(patron.getPatronId()));
 			System.out.println("bookCheckouts: " + bookCheckouts);
 			
 			request.setAttribute("bookCheckouts", bookCheckouts);

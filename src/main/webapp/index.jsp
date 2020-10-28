@@ -16,7 +16,18 @@
 				<h1 class="display-8">Welcome to JUMP Online Library</h1>
 			</div>
 		</div>
-		
+		<br>
+		<c:choose>
+			<c:when test="${ librarian == true }">
+				<h1 class="display-3">Librarian Sign In</h1>
+			</c:when>
+
+			<c:otherwise>
+				<h1 class="display-3">Patron Sign I</h1>
+			</c:otherwise>
+
+		</c:choose>
+		<br>
 		<form action="patron/loginPatron" method="post" >
 			<div class="form-group">
 				<label for="userName">User Name</label> 
@@ -27,7 +38,16 @@
 				<label for="password">Password</label> 
 				<input type="password" class="form-control" id="password" name="password" required>
 			</div>
-<!-- 			<div style="padding: 1em 1em"><a href="">Sign In</a> as Librarian</div>-->			
+			<div style="padding: 1em 1em">
+			<c:choose>
+			<c:when test="${ librarian == true }">
+			<a href="<%= request.getContextPath() %>/librarian">Sign In</a> as Librarian	
+			</c:when>
+			<c:otherwise>
+			<a href="<%= request.getContextPath() %>/patron">Sign In</a> as Patron	
+			</c:otherwise>
+			</c:choose>
+			</div>	
 			<button type="submit" class="btn btn-primary">Login as Patron</button>
 			<button onclick="window.location.href='patronSignup.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
 			<br><br>

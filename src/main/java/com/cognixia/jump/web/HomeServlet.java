@@ -20,7 +20,9 @@ public class HomeServlet extends HttpServlet {
 		case "/librarian":
 			signInLibrarian(request, response);
 			break;
-
+		case "/patron":
+			signInPatron(request, response);
+			break;
 		default:
 			break;
 		}
@@ -29,6 +31,12 @@ public class HomeServlet extends HttpServlet {
 	private void signInLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		request.setAttribute("librarian", true);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+	}
+	
+	private void signInPatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		request.setAttribute("librarian", false);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
