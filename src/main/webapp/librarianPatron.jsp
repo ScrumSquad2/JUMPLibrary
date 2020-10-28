@@ -10,41 +10,46 @@
 		
 			<thead>
 				<tr>
-					<th>ISBN</th>
-					<th>Title</th>
-					<th>Description</th>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
 					<th>Status</th>
-					<th>Added Date</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			
 			<tbody>
 			
-				<c:forEach var="product" items="${allProducts}">
+				<c:forEach var="patron" items="${allPatrons}">
 				
 					<tr>
 						<td>
-							<c:out value="${ product.id }"/>
+							<c:out value="${ patron.patronId }"/>
 						</td>
 						<td>
-							<c:out value="${ product.item }"/>
+							<c:out value="${ patron.firstName }"/>
 						</td>
 						<td>
-							<c:out value="${ product.qty }"/>
+							<c:out value="${ patron.lastName }"/>
 						</td>
 						<td>
-							<c:out value="${ product.description }"/>
+							<c:out value="${ patron.userName }"/>
 						</td>
 						<td>
-							<a href="edit?id=<c:out value='${ product.id }' />">
-								<button class="btn btn-primary">Edit</button>
-							</a>
-							
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							
-							<a href="delete?id=<c:out value='${ product.id }' />">
-								<button class="btn btn-danger">Delete</button>
+							<c:choose>
+								<c:when test="${ patron.accountFrozen == true }">Frozen</c:when>
+								<c:otherwise>Not Frozen</c:otherwise>
+							</c:choose>
+						</td>
+						<td>
+							<a href="freeze?id=<c:out value='${ product.id }' />">
+								<button class="btn btn-primary">
+									<c:choose>
+										<c:when test="${ patron.accountFrozen == true }">Unfreeze</c:when>
+										<c:otherwise>Freeze</c:otherwise>
+									</c:choose>
+								</button>
 							</a>
 						</td>
 					</tr>
