@@ -1,52 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Sign Up</title>
+<meta charset="UTF-8">
+<title>JUMP Online Library</title>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
 <body>
-
-	<div class="container">
-
-		<br>
-
-				<h1 class="display-3">Add Profile</h1>
-
-		<br>
-
-				<form action="addPatron" method="post">
-			
-			<div class="form-group">
-				<label for="firstName">First Name</label>
-				<input type="text" name="firstName" id="firstName" class="form-control" required>
-			</div>
-			
-			<div class="form-group">
-				<label for="lastName">Last Name</label>
-				<input type="text" name="lastName" id="lastName" class="form-control" required>
-			</div>
-			
-			<div class="form-group">
-				<label for="userName">User Name</label>
-				<input type="text" name="userName" id="userName" class="form-control" required>
-			</div>
-			
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" class="form-control" required/>
-			</div>
-			
-			
-			<input type="submit" value="Save" class="btn btn-primary">
-		
-		</form>
+	<%-- <div class="container"> --%>
 	
+			<div class="jumbotron jumbotron-fluid ">
+				<div class="container">
+					<h1 class="text-center"  style="margin-bottom:50px ">Sign-up Page</h1>
+					<p class="lead text-center">Welcome! Please choose patron or librarian for signup.</p>
+				</div>
+				
+			</div>
+	<%-- <div> --%>
+	<div class="container" >
+			<div class="text-center">
+			<div class="btn-group-vertical" style="margin-bottom:10px; border-radius:10px ">
+
+					
+					<a class="btn btn-primary btn-lg" href="patronSignup.jsp" style="margin-bottom:50px; border-radius:10px " role="button">Patron Signup </a>
+
+					<a class="btn btn-primary btn-lg" href="librarianSignup.jsp" style="margin-bottom:50px; border-radius:10px " role="button">Librarian Signup </a>
+		
+				
+          	</div>
+			</div>
 	</div>
-
-
-<%@ include file= "footer.jsp" %>
+	
+</body>
+</html>
