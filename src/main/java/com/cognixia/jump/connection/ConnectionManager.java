@@ -11,13 +11,13 @@ public class ConnectionManager {
 	private static final String MACURL = "jdbc:mysql://localhost:3306/library?serverTimezone=EST5EDT";
 	private static final String WINURL = "jdbc:mysql://localhost:3306/library";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "Root@123";
+	private static final String PASSWORD = "root";
 
 	private static void makeConnection() {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(MACURL, USERNAME, PASSWORD);
+			connection = DriverManager.getConnection(WINURL, USERNAME, PASSWORD);
 			System.out.println("Connected");
 
 		} catch (SQLException e) {
