@@ -32,6 +32,7 @@ public class PatronServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private PatronDAO patronDAO;
     private BookCheckoutDAO bookCheckoutDAO;
+	private BookDAO bookDAO;
     private static Patron patron;
 	
 	@Override
@@ -39,6 +40,7 @@ public class PatronServlet extends HttpServlet {
 		
 		patronDAO = new PatronDAOImpl();
 		bookCheckoutDAO = new BookCheckoutDAOImpl();
+		bookDAO = new BookDAOImpl();
 	}
 	
 	@Override
@@ -115,7 +117,6 @@ public class PatronServlet extends HttpServlet {
 	
 	private void listAllBooks(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		BookDAO bookDAO = new BookDAOImpl();
 		List<Book> allBooks = bookDAO.getAllBooks();
 		request.setAttribute("allBooks", allBooks);
 		System.out.println("allBooks: " + allBooks);
@@ -176,36 +177,36 @@ public class PatronServlet extends HttpServlet {
 		}
 	}
 	
-	private void listCurrent(HttpServletRequest request, HttpServletResponse response) 
+	private void listCurrent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (patron == null) response.sendRedirect("/JUMPLibrary");
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
 		System.out.println("patronID: " + patron.getPatronId());
 		List<BookCheckout> bookCheckouts;
-		try {
-			bookCheckouts = bookCheckoutDAO.getAllCheckouts(patronDAO.getPatronById(patron.getPatronId()));
-			System.out.println("bookCheckouts: " + bookCheckouts);
-			
-			request.setAttribute("bookCheckouts", bookCheckouts);
-			// TODO change to correct jsp
-			RequestDispatcher dispatcher = request.getRequestDispatcher("product-list.jsp");
-			System.out.println("send");
-			dispatcher.forward(request, response);	
-		} catch (ItemNotFoundInDatabaseException e) {
-			e.printStackTrace();
-		}
+		bookCheckouts = bookCheckoutDAO.getAllCheckouts(patron);
+		System.out.println("bookCheckouts: " + bookCheckouts);
+
+		request.setAttribute("bookCheckouts", bookCheckouts);
+		// TODO change to correct jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("product-list.jsp");
+		System.out.println("send");
+		dispatcher.forward(request, response);
 	}
-	
+
 	private void addCheckout(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		int patronId = Integer.parseInt(request.getParameter("patronId"));
+		
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");		
 		String isbn = request.getParameter("isbn");
 		Date checkoutDate = new Date(System.currentTimeMillis());
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DATE, 30);
 		Date dueDate = new Date(c.getTimeInMillis());
 		if (bookCheckoutDAO.addBookCheckout(
-				new BookCheckout(0, patronId, isbn, checkoutDate, dueDate, null)))
+				new BookCheckout(0, patron.getPatronId(), isbn, checkoutDate, dueDate, null)))
 			System.out.println("Sucess add BookCheckout " + isbn);
+		listAllBooks(request, response);
 	}
 	
 	private void returnCheckout(HttpServletRequest request, HttpServletResponse response) 
