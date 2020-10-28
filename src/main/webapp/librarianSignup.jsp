@@ -95,7 +95,7 @@
 </head>
 <body>
 <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="libarian/addLibarian" method="post">
 		<h2>Sign Up as Librarian</h2>
 		<p>Please fill in this form to create an account!</p>
 		<hr>

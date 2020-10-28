@@ -94,7 +94,7 @@
 </head>
 <body>
 <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="patron/addPatron" method="post">
 		<h2>Sign Up as Patron</h2>
 		<p>Please fill in this form to create an account!</p>
 		<hr>

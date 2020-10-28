@@ -11,16 +11,16 @@
 
 </head>
 <body>
-	<div class="container">
+	<%-- <div class="container"> --%>
 	
-			<div class="jumbotron jumbotron-fluid">
+			<div class="jumbotron jumbotron-fluid ">
 				<div class="container">
-					<h1>Signup Page</h1>
-					<p class="lead">Welcome! Please choose patron or librarian for signup.</p>
+					<h1 class="text-center"  style="margin-bottom:50px ">Sign-up Page</h1>
+					<p class="lead text-center">Welcome! Please choose patron or librarian for signup.</p>
 				</div>
 				
 			</div>
-	<div>
+	<%-- <div> --%>
 	<div class="container" >
 			<div class="text-center">
 			<div class="btn-group-vertical" style="margin-bottom:10px; border-radius:10px ">
