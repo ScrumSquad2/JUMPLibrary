@@ -75,6 +75,32 @@ public class BookCheckoutDAOImpl implements BookCheckoutDAO {
 		return result;
 		
 	}
+	
+	@Override
+	public BookCheckout getBookCheckoutById(int id) throws ItemNotFoundInDatabaseException {
+		ResultSet rs = null;
+		try (PreparedStatement pstmt = conn.prepareStatement("select * from book_checkout where checkout_id = ?")
+				) {
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int patronId = rs.getInt("patron_id");
+				String isbn = rs.getString("isbn");
+				Date checkoutDate = rs.getDate("checkedout");
+				Date dueDate = rs.getDate("due_date");
+				Date returnedDate = rs.getDate("returned");
+				
+				BookCheckout chk = new BookCheckout(id, patronId, isbn, checkoutDate, dueDate, returnedDate);
+				return chk;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		throw new ItemNotFoundInDatabaseException(id, "book_checkout");
+	}
 
 	@Override
 	public boolean addBookCheckout(BookCheckout checkout) {
