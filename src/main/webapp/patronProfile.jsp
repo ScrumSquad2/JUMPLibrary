@@ -32,7 +32,7 @@
 							<c:out value="${ patron.userame }"/>
 						</td>
 						<td>
-							<c:out value="${ patron.accoutFrozen }"/>
+							<c:out value="${ patron.accountFrozen }"/>
 						</td>
 						<td>
 							<a href="updatePatron?id=<c:out value='${ patron.id }' />">
