@@ -19,10 +19,7 @@
 	
 		<a class="navbar-brand" href="<%= request.getContextPath() %>">Logout</a>
 
-		
 			<div class="navbar-nav">
-				 
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/patronBook.jsp">Book</a> 
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patronProfile.jsp">Profile</a>
 				
