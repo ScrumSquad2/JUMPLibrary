@@ -27,7 +27,7 @@
 				
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listReturned">History</a>
 					
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patronProfile.jsp">Profile</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/displayProfile">Profile</a>
 				
 			</div>
 

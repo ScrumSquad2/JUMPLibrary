@@ -20,7 +20,7 @@
 				
 					<tr>
 						<td>
-							<c:out value="${ patron.id }"/>
+							<c:out value="${ patron.patronId }"/>
 						</td>
 						<td>
 							<c:out value="${ patron.firstName }"/>
@@ -29,13 +29,13 @@
 							<c:out value="${ patron.lastName }"/>
 						</td>
 						<td>
-							<c:out value="${ patron.userame }"/>
+							<c:out value="${ patron.userName }"/>
 						</td>
 						<td>
 							<c:out value="${ patron.accountFrozen }"/>
 						</td>
 						<td>
-							<a href="updatePatron?id=<c:out value='${ patron.id }' />">
+							<a href="<%=request.getContextPath()%>/patron/editPatron?id=<c:out value='${ patron.patronId }' />">
 								<button class="btn btn-primary">Update</button>
 							</a>
 						</td>

@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,16 +26,18 @@
 		<br>
 		<c:choose>
 			<c:when test="${ librarian != true }">
-				<h1 class="display-3">Librarian Sign In</h1>
+				<h1 class="display-3">Patron Sign In</h1>
 			</c:when>
 
 			<c:otherwise>
-				<h1 class="display-3">Patron Sign I</h1>
+				<h1 class="display-3">Librarian Sign In</h1>
 			</c:otherwise>
 		</c:choose>
 
 		<br>
-		<form action="patron/loginPatron" method="post">
+		<form
+			action="${ librarian != null ? 'librarian/loginLibrarian' : 'patron/loginPatron' }"
+			method="post">
 			<div class="form-group">
 				<label for="userName">User Name</label> <input autocapitalize="off"
 					autocorrect="off" type="text" class="form-control" id="userName"
@@ -44,37 +50,20 @@
 			</div>
 			<div style="padding: 1em 1em">
 				<c:choose>
-					<c:when test="${ librarian == true }">
-						<a href="<%=request.getContextPath()%>/librarian">Sign In</a> as Librarian	
+					<c:when test="${ librarian != true }">
+						<a href="<%=request.getContextPath()%>/patronSignin">Sign In</a> as Librarian	
 			</c:when>
 					<c:otherwise>
-						<a href="<%=request.getContextPath()%>/patron">Sign In</a> as Patron	
+						<a href="<%=request.getContextPath()%>/librarianSignin">Sign
+							In</a> as Patron
 			</c:otherwise>
 				</c:choose>
 			</div>
-			<button type="submit" class="btn btn-primary">Log In as
-				Patron</button>
+			<button type="submit" class="btn btn-primary">Log In</button>
 			<button onclick="window.location.href='patronSignup.jsp' ;"
 				type="button" class="btn btn-secondary">Sign Up</button>
-			<br>
-			<br>
+			<br> <br>
 
-		</form>
-
-		<form action="patron/loginPatron" method="post">
-
-			<div class="form-group">
-				<label for="email">Email Address</label> <input type="email"
-					class="form-control" id="email" name="email" required>
-			</div>
-
-			<div class="form-group">
-				<label for="pw">Password</label> <input type="password"
-					class="form-control" id="pw" name="pw" required>
-			</div>
-
-			<button type="submit" class="btn btn-primary">Log In as
-				Librarian</button>
 		</form>
 
 	</div>

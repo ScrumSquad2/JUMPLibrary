@@ -15,15 +15,16 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String action = request.getServletPath();
-		
+		System.out.println("Home action: " + action);
 		switch (action) {
-		case "/librarian":
-			signInLibrarian(request, response);
-			break;
-		case "/patron":
+		case "/librarianSignin":
 			signInPatron(request, response);
 			break;
+		case "/patronSignin":
+			signInLibrarian(request, response);
+			break;
 		default:
+			response.sendRedirect("/");
 			break;
 		}
 	}
@@ -31,13 +32,13 @@ public class HomeServlet extends HttpServlet {
 	private void signInLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		request.setAttribute("librarian", true);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 	
 	private void signInPatron(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		request.setAttribute("librarian", false);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	@Override

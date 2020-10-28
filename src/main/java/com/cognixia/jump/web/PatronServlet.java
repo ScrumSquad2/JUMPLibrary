@@ -59,8 +59,14 @@ public class PatronServlet extends HttpServlet {
 		case "/loginPatron":
 			loginPatron(request, response);
 			break;
+		case "/displayProfile":
+			displayProfile(request, response);
+			break;
 		case "/logoutPatron":
 			logoutPatron(request, response);
+			break;
+		case "/editPatron":
+			editPatron(request, response);
 			break;
 		case "/updatePatron":
 			updatePatron(request, response);
@@ -106,10 +112,7 @@ public class PatronServlet extends HttpServlet {
 			System.out.println("Sucess add " + patron);
 			patron = newPatron;
 			
-			request.setAttribute("patron", patron);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
-			System.out.println("send to dispatcher");
-			dispatcher.forward(request, response);
+			listAllBooks(request, response);
 		} catch (UsernameAlreadyExistsException e) {
 			newPatron(request, response);
 			e.printStackTrace();
@@ -141,17 +144,22 @@ public class PatronServlet extends HttpServlet {
 				System.out.println("Invalid password");
 				response.sendRedirect("/JUMPLibrary");
 			} else {
-				System.out.println("send");
-				request.setAttribute("patron", patron);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
-				System.out.println("send to dispatcher");
-				dispatcher.forward(request, response);
+				listAllBooks(request, response);
 			}
 		} catch (ItemNotFoundInDatabaseException e) {
 			e.printStackTrace();
 			System.out.println("Cannot found patron");
+			patron = null;
 			response.sendRedirect("/JUMPLibrary");
 		}
+	}
+	
+	private void displayProfile(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
+		request.setAttribute("patron", patron);
+		request.getRequestDispatcher("/patronProfile.jsp").forward(request, response);
 	}
 	
 	private void logoutPatron(HttpServletRequest request, HttpServletResponse response) 
@@ -159,6 +167,14 @@ public class PatronServlet extends HttpServlet {
 		if (patron != null)
 			patron = null;
 		response.sendRedirect("/JUMPLibrary");
+	}
+	
+	private void editPatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (patron == null)
+			response.sendRedirect("/JUMPLibrary");
+		request.setAttribute("patron", patron);
+		request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 	}
 	
 	private void updatePatron(HttpServletRequest request, HttpServletResponse response) 
@@ -173,11 +189,15 @@ public class PatronServlet extends HttpServlet {
 		boolean accountFrozen = false;
 		
 		try {
-			patronDAO.updatePatron(
-					new Patron(patronId, firstName, lastName, userName, password, accountFrozen));
+			Patron newPatron = new Patron(patronId, firstName, lastName, userName, password, accountFrozen);
+			patronDAO.updatePatron(newPatron);
+			patron = newPatron;
 			System.out.println("Sucess update " + userName);
+			request.setAttribute("patron", patron);
+			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			// TODO Auto-generated catch block
+			request.setAttribute("patron", patron);
+			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 	}
@@ -254,7 +274,6 @@ public class PatronServlet extends HttpServlet {
 	@Override
 	public void destroy() {
 		
-		//TODO get the Connection and destroy
 		try {
 			ConnectionManager.getConnection().close();
 		} catch (SQLException e) {
