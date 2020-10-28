@@ -10,7 +10,7 @@
 
 				<form action="updatePatron" method="post">
 
-				<input type="hidden" name="id" value="<c:out value='${ patron.patronId }'/>">
+				<input type="hidden" name="patronId" value="<c:out value='${ patron.patronId }'/>">
 			
 			<div class="form-group">
 				<label for="firstName">First Name</label>
