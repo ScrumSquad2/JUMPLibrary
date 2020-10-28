@@ -2,8 +2,6 @@
 
 	<div class="container">
 		
-		<%-- if doing an update, a product object will be passed to this jsp --%>
-		<%-- if doing an insert, nothing will be passed to this jsp --%>
 		<br>
 
 				<h1 class="display-3">Update Profile</h1>
