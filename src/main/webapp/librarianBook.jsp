@@ -21,29 +21,35 @@
 			
 			<tbody>
 			
-				<c:forEach var="product" items="${allProducts}">
+				<c:forEach var="book" items="${allBooks}">
 				
 					<tr>
 						<td>
-							<c:out value="${ product.id }"/>
+							<c:out value="${ book.isbn }"/>
 						</td>
 						<td>
-							<c:out value="${ product.item }"/>
+							<c:out value="${ book.title }"/>
 						</td>
 						<td>
-							<c:out value="${ product.qty }"/>
+							<c:out value="${ book.desc }"/>
 						</td>
 						<td>
-							<c:out value="${ product.description }"/>
+							<c:choose>
+								<c:when test="${ book.rented == true }">Rented</c:when>
+								<c:otherwise>Available</c:otherwise>
+							</c:choose>
 						</td>
 						<td>
-							<a href="edit?id=<c:out value='${ product.id }' />">
+							<c:out value="${ product.addedToLibrary }"/>
+						</td>
+						<td>
+							<a href="edit?id=<c:out value='${ product.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 							</a>
 							
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							
-							<a href="delete?id=<c:out value='${ product.id }' />">
+							<a href="delete?id=<c:out value='${ product.isbn }' />">
 								<button class="btn btn-danger">Delete</button>
 							</a>
 						</td>
