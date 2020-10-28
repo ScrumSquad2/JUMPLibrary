@@ -5,7 +5,7 @@
 		<br>
 		<h1 class="display-3">Book List</h1>
 		<br>
-		
+		<div style="overflow: scroll; height: 675px;">
 		<table class="table table-striped">
 		
 			<thead>
@@ -62,6 +62,7 @@
 			</tbody>
 		
 		</table>
+		</div>
 		
 	</div>
 
