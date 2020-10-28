@@ -45,14 +45,14 @@
 				<label for="password">Password</label> 
 				<input type="password" class="form-control" id="password" name="password" required>
 			</div>
-			
+<!-- 			<div style="padding: 1em 1em"><a href="">Sign In</a> as Librarian</div>-->			
 			<button type="submit" class="btn btn-primary">Login as Patron</button>
 			<button onclick="window.location.href='signUp.jsp' ;" type="button" class="btn btn-secondary">Sign Up</button>
 			<br><br>
 			
 		</form>
 		
-				<form action="servlet/test" method="post" >
+				<form action="patron/loginPatron" method="post" >
 		
 			<div class="form-group">
 				<label for="email">Email Address</label> 

@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.cognixia.jump.web.testServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<display-name>HomeServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.cognixia.jump.web.HomeServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>PatronServlet</servlet-name>
   	<url-pattern>/PatronServlet</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>testServlet</servlet-name>
   	<url-pattern>/testServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<url-pattern>/HomeServlet</url-pattern>
   </servlet-mapping>
 </web-app>

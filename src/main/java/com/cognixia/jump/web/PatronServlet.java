@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.dao.BookCheckoutDAO;
 import com.cognixia.jump.dao.BookCheckoutDAOImpl;
+import com.cognixia.jump.dao.BookDAO;
+import com.cognixia.jump.dao.BookDAOImpl;
 import com.cognixia.jump.dao.ItemNotFoundInDatabaseException;
 import com.cognixia.jump.dao.PatronDAO;
 import com.cognixia.jump.dao.PatronDAOImpl;
 import com.cognixia.jump.dao.UsernameAlreadyExistsException;
+import com.cognixia.jump.model.Book;
 import com.cognixia.jump.model.BookCheckout;
 import com.cognixia.jump.model.Patron;
 
@@ -45,11 +48,11 @@ public class PatronServlet extends HttpServlet {
 		String action = request.getPathInfo();
 		
 		switch(action) {
-		case "/newPatron":
-			newPatron(request, response);
-			break;
 		case "/addPatron":
 			insertPatron(request, response);
+			break;
+		case "/listAllBooks":
+			listAllBooks(request, response);
 			break;
 		case "/loginPatron":
 			loginPatron(request, response);
@@ -105,9 +108,21 @@ public class PatronServlet extends HttpServlet {
 			System.out.println("send to dispatcher");
 			dispatcher.forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			response.sendRedirect("patron/newPatron");
+			newPatron(request, response);
 			e.printStackTrace();
 		}
+	}
+	
+	private void listAllBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		BookDAO bookDAO = new BookDAOImpl();
+		List<Book> allBooks = bookDAO.getAllBooks();
+		request.setAttribute("allBooks", allBooks);
+		System.out.println("allBooks: " + allBooks);
+		//TODO: change the jsp to the list jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
+		System.out.println("send to dispatcher");
+		dispatcher.forward(request, response);
 	}
 	
 	private void loginPatron(HttpServletRequest request, HttpServletResponse response) 
