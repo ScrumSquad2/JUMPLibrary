@@ -120,7 +120,7 @@ public class PatronServlet extends HttpServlet {
 		request.setAttribute("allBooks", allBooks);
 		System.out.println("allBooks: " + allBooks);
 		//TODO: change the jsp to the list jsp
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/patron-form.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronBook.jsp");
 		System.out.println("send to dispatcher");
 		dispatcher.forward(request, response);
 	}
