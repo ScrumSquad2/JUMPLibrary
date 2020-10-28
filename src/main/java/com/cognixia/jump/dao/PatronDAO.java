@@ -8,12 +8,14 @@ public interface PatronDAO {
 	
 	public List<Patron> getAllPatrons();
 	
-	public Patron getPatronById(int id);
+	public Patron getPatronById(int id) throws ItemNotFoundInDatabaseException;
 	
-	public boolean addPatron(Patron patron);
+	public Patron getPatronByUser(String userName) throws ItemNotFoundInDatabaseException;
+	
+	public boolean addPatron(Patron patron) throws UsernameAlreadyExistsException;
 	
 	public boolean deletePatronById(int id);
 	
-	public boolean updatePatron(Patron patron);
+	public boolean updatePatron(Patron patron) throws UsernameAlreadyExistsException;
 
 }

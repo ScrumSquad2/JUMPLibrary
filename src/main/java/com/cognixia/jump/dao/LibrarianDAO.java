@@ -8,12 +8,12 @@ public interface LibrarianDAO {
 	
 	public List<Librarian> getAllLibrarians();
 	
-	public Librarian getLibrarianByUser(String user);
+	public Librarian getLibrarianByUser(String user) throws ItemNotFoundInDatabaseException;
 	
-	public boolean addLibrarian(Librarian libr);
+	public boolean addLibrarian(Librarian libr) throws UsernameAlreadyExistsException;
 	
 	public boolean deleteLibrarianByUser(String user);
 	
-	public boolean updateLibrarian(Librarian libr);
+	public boolean updateLibrarian(Librarian libr) throws UsernameAlreadyExistsException;
 
 }

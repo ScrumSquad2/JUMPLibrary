@@ -8,7 +8,7 @@ public interface BookDAO {
 	
 	public List<Book> getAllBooks();
 	
-	public Book getBookByIsbn(String isbn);
+	public Book getBookByIsbn(String isbn) throws ItemNotFoundInDatabaseException;
 	
 	public boolean addBook(Book book);
 	

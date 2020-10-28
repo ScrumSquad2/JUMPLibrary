@@ -1,19 +1,25 @@
 package com.cognixia.jump.model;
 
+import java.sql.Date;
 
 public class BookCheckout {
+	
+	int id;
 
     private int patronId;
 
     private String isbn;
 
-    private DateTime checkoutDate;
+    private Date checkoutDate;
 
-    private DateTime dueDate;
+    private Date dueDate;
 
-    private DateTime returnedDate;
+    private Date returnedDate;
 
-    public BookCheckout(int patronId, String isbn, DateTime checkoutDate, DateTime dueDate, DateTime returnedDate){
+    public BookCheckout(int id, int patronId, String isbn, Date checkoutDate, Date dueDate, Date returnedDate){
+    	
+    	this.id = id;
+    	
         this.patronId = patronId;
 
         this.isbn = isbn;
@@ -24,9 +30,23 @@ public class BookCheckout {
 
         this.returnedDate = returnedDate;
     }
+    
+    
 
-    public int getPatronId(){
-        return this.pagtronId;
+    public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
+	public int getPatronId(){
+        return this.patronId;
     }
 
     public void setPatronId(int patronId){
@@ -41,27 +61,27 @@ public class BookCheckout {
         this.isbn = isbn;
     }
 
-    public DateTime getCheckoutDate(){
+    public Date getCheckoutDate(){
         return this.checkoutDate;
     }
 
-    public void setCheckoutDate(DateTime checkoutDate){
+    public void setCheckoutDate(Date checkoutDate){
         this.checkoutDate = checkoutDate;
     }
 
-    public DateTime getDueDate(){
+    public Date getDueDate(){
         return this.dueDate;
     }
 
-    public void setDueDate(DateTime dueDate){
+    public void setDueDate(Date dueDate){
         this.dueDate = dueDate;
     }
 
-    public DateTime getReturnedDate(){
+    public Date getReturnedDate(){
         return this.returnedDate;
     }
 
-    public void setReturnedDate(DateTime returnedDate){
+    public void setReturnedDate(Date returnedDate){
         this.returnedDate = returnedDate;
     }
 

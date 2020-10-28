@@ -2,13 +2,13 @@ package com.cognixia.jump.model;
 
 public class Librarian {
 
-    private ind librarianId;
+    private int librarianId;
 
     private String userName;
 
     private String password;
 
-    public Librarian(ind librarianId, String userName, String password){
+    public Librarian(int librarianId, String userName, String password){
         this.librarianId = librarianId;
 
         this.userName = userName;
@@ -39,5 +39,5 @@ public class Librarian {
 
     public void setLibrarianId(int librarianId){
       this.librarianId = librarianId;
-
+    }
 }
