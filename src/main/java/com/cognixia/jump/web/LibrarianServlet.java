@@ -53,7 +53,8 @@ public class LibrarianServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
-		String action = request.getServletPath();
+		String action = request.getPathInfo();
+		System.out.println("action: " + action);
 		switch(action) {
 		case "/listAllBooks":
 			listAllBooks(request,response);
@@ -126,7 +127,7 @@ public class LibrarianServlet extends HttpServlet{
 	private void loginLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		System.out.println("login");
-		String userName = request.getParameter("username");
+		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		try {
 			 librarian = librarianDAO.getLibrarianByUser(userName);
