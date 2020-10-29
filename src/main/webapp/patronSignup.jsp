@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700"
 	rel="stylesheet">
-<title>Bootstrap Simple Login Form with Blue Background</title>
+<title>Patron Sign Up Form</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- 
@@ -182,7 +182,6 @@ body {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
 		integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
 		crossorigin="anonymous"></script>
-
 	<script type="text/javascript">
 		const isAlert = document.getElementsByClassName('alert');
 		if (isAlert.length > 0) {
