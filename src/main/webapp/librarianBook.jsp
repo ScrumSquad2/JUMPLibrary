@@ -40,10 +40,10 @@
 							</c:choose>
 						</td>
 						<td>
-							<c:out value="${ product.addedToLibrary }"/>
+							<c:out value="${ book.addedToLibrary }"/>
 						</td>
 						<td>
-							<a href="edit?id=<c:out value='${ product.isbn }' />">
+							<a href="edit?id=<c:out value='${ book.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 							</a>
 						</td>
