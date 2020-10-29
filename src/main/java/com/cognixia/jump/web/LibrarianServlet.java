@@ -26,6 +26,7 @@ import com.cognixia.jump.dao.PatronDAOImpl;
 import com.cognixia.jump.dao.UsernameAlreadyExistsException;
 import com.cognixia.jump.model.Book;
 import com.cognixia.jump.model.Librarian;
+import com.cognixia.jump.model.MessageConstant;
 import com.cognixia.jump.model.Patron;
 
 
@@ -237,7 +238,8 @@ public class LibrarianServlet extends HttpServlet{
 			if (!librarian.getPassword().equals(password)) {
 				librarian = null;
 				System.out.println("Invalid password");
-				response.sendRedirect("/JUMPLibrary");
+				request.setAttribute("message", MessageConstant.INVALID_PASSWORD);
+				request.getRequestDispatcher("/index.jsp").forward(request, response);		
 			} else {
 				listAllBooks(request, response);
 			}
@@ -245,7 +247,8 @@ public class LibrarianServlet extends HttpServlet{
 			e.printStackTrace();
 			System.out.println("Cannot find librarian");
 			librarian = null;
-			response.sendRedirect("/JUMPLibrary");
+			request.setAttribute("message", MessageConstant.INVALID_USERNAME);
+			request.getRequestDispatcher("/index.jsp").forward(request, response);		
 		}	
 	}
 	
@@ -262,6 +265,15 @@ public class LibrarianServlet extends HttpServlet{
 			response.sendRedirect("/JUMPLibrary");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String newPassword = request.getParameter("new-password");
+		
+		if (!password.equals(librarian.getPassword())) {
+			request.setAttribute("message", MessageConstant.INVALID_PASSWORD);
+			request.setAttribute("librarian", librarian);
+			request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
+		} else if (newPassword != null && !newPassword.isEmpty()) {
+			password = newPassword;
+		}
 		try {
 			Librarian newLibrarian = new Librarian(librarian.getLibrarianId(), userName, password);
 			librarianDAO.updateLibrarian(newLibrarian);
@@ -270,6 +282,7 @@ public class LibrarianServlet extends HttpServlet{
 			request.setAttribute("librarian", librarian);
 			request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
+			request.setAttribute("message", MessageConstant.DUPLICATE_USERNAME);
 			request.setAttribute("librarian", librarian);
 			request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
 			e.printStackTrace();

@@ -24,15 +24,14 @@ import com.cognixia.jump.dao.PatronDAOImpl;
 import com.cognixia.jump.dao.UsernameAlreadyExistsException;
 import com.cognixia.jump.model.Book;
 import com.cognixia.jump.model.BookCheckout;
+import com.cognixia.jump.model.MessageConstant;
 import com.cognixia.jump.model.Patron;
 
 @WebServlet("/patron/*")
 public class PatronServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private static final String INVALID_PASSWORD = "Invalid Password, please try again";
-	private static final String DUPLICATE_USERNAME = "User name already exist, please try again";
-	private static final String INVALID_USERNAME = "UserName not found, please try again";
+
 	
     private PatronDAO patronDAO;
     private BookCheckoutDAO bookCheckoutDAO;
@@ -121,7 +120,7 @@ public class PatronServlet extends HttpServlet {
 			listAllBooks(request, response);
 		} catch (UsernameAlreadyExistsException e) {
 			System.out.println("Username alredy exist");
-			request.setAttribute("message", DUPLICATE_USERNAME);
+			request.setAttribute("message", MessageConstant.DUPLICATE_USERNAME);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/patronSignup.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -151,7 +150,7 @@ public class PatronServlet extends HttpServlet {
 			if (!patron.getPassword().equals(password)) {
 				patron = null;
 				System.out.println("Invalid password");
-				request.setAttribute("message", INVALID_PASSWORD);
+				request.setAttribute("message", MessageConstant.INVALID_PASSWORD);
 				request.getRequestDispatcher("/index.jsp").forward(request, response);		
 			} else {
 				listAllBooks(request, response);
@@ -160,7 +159,7 @@ public class PatronServlet extends HttpServlet {
 			e.printStackTrace();
 			System.out.println("Cannot found patron");
 			patron = null;
-			request.setAttribute("message", INVALID_USERNAME);
+			request.setAttribute("message", MessageConstant.INVALID_USERNAME);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 			dispatcher.forward(request, response);		
 		}
@@ -201,7 +200,7 @@ public class PatronServlet extends HttpServlet {
 		String newPassword = request.getParameter("new-password");
 		boolean accountFrozen = false;
 		if (!password.equals(patron.getPassword())) {
-			request.setAttribute("message", INVALID_PASSWORD);
+			request.setAttribute("message", MessageConstant.INVALID_PASSWORD);
 			request.setAttribute("patron", patron);
 			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 		} else if (newPassword != null && !newPassword.isEmpty()) {
@@ -216,7 +215,7 @@ public class PatronServlet extends HttpServlet {
 			request.setAttribute("patron", patron);
 			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			request.setAttribute("message", DUPLICATE_USERNAME);
+			request.setAttribute("message", MessageConstant.DUPLICATE_USERNAME);
 			request.setAttribute("patron", patron);
 			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
 			e.printStackTrace();
