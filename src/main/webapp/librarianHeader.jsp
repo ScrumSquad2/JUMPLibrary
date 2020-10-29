@@ -24,11 +24,11 @@
 				 
 				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/listAllBooks">Book Catalog</a> 
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarianAddBook.jsp">Add Book</a> 
+				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/addBook">Add Book</a> 
 					
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/librarianPatron.jsp">Manage Patrons</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/librarian/managePatrons">Manage Patrons</a>
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian-form.jsp">Update Profile</a> 
+				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/updateBook">Update Book</a> 
 				
 			</div>
 
