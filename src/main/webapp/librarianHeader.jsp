@@ -24,7 +24,7 @@
 				 
 				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/listAllBooks">Book Catalog</a> 
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/addBook">Add Book</a> 
+				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarianAddBook.jsp">Add Book</a> 
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/librarian/managePatrons">Manage Patrons</a>
 				
