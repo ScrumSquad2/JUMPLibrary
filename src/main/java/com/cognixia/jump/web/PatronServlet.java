@@ -142,7 +142,9 @@ public class PatronServlet extends HttpServlet {
 			if (!patron.getPassword().equals(password)) {
 				patron = null;
 				System.out.println("Invalid password");
-				response.sendRedirect("/JUMPLibrary");
+				request.setAttribute("message", "Invalid Password, please try again");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+				dispatcher.forward(request, response);
 			} else {
 				listAllBooks(request, response);
 			}
@@ -150,7 +152,9 @@ public class PatronServlet extends HttpServlet {
 			e.printStackTrace();
 			System.out.println("Cannot found patron");
 			patron = null;
-			response.sendRedirect("/JUMPLibrary");
+			request.setAttribute("message", "Invalid UserName, please try again");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+			dispatcher.forward(request, response);		
 		}
 	}
 	
@@ -186,7 +190,14 @@ public class PatronServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String newPassword = request.getParameter("new-password");
 		boolean accountFrozen = false;
+		if (!password.equals(patron.getPassword())) {
+			request.setAttribute("patron", patron);
+			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
+		} else if (newPassword != null && !newPassword.isEmpty()) {
+			password = newPassword;
+		}
 		
 		try {
 			Patron newPatron = new Patron(patronId, firstName, lastName, userName, password, accountFrozen);

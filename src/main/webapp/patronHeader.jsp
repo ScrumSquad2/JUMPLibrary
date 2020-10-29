@@ -21,9 +21,9 @@
 
 			<div class="navbar-nav">
 					
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listAllBooks">Book</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listAllBooks">Book Catalogue</a>
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listCurrent">Current</a>
+				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listCurrent">Current Books</a>
 				
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/patron/listReturned">History</a>
 					

@@ -104,7 +104,7 @@
 			const password2 = $("#confirm_password").val();
 
 			if (password1.localeCompare(password2)) {
-				$("#validate-status").text("invalid");
+				$("#validate-status").text("please match the password");
 				event.preventDefault();
 			} else {
 				$("#validate-status").text("");

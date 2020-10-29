@@ -3,7 +3,7 @@
 	<div class="container">
 	
 		<br>
-		<h1 class="display-3">Book List</h1>
+		<h1 class="display-3">Book Catalog</h1>
 		<br>
 		
 		<table class="table table-striped">
@@ -43,7 +43,7 @@
 							<c:out value="${ book.addedToLibrary }"/>
 						</td>
 						<td>
-							<a href="edit?id=<c:out value='${ book.isbn }' />">
+							<a href="updateBook?id=<c:out value='${ book.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 							</a>
 						</td>
