@@ -59,6 +59,7 @@ public class LibrarianServlet extends HttpServlet{
 		switch(action) {
 		case "/listAllBooks":
 			listAllBooks(request,response);
+			break;
 		case "/addBook":
 			addBook(request,response);
 			break;
@@ -67,8 +68,10 @@ public class LibrarianServlet extends HttpServlet{
 			break;
 		case "/loginLibrarian":
 			loginLibrarian(request,response);
+			break;
 		case "/logoutLibrarian":
 			logoutLibrarian(request,response);
+			break;
 		}
 	}
 	
@@ -93,9 +96,12 @@ public class LibrarianServlet extends HttpServlet{
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
 		if (bookDAO.addBook(
-				new Book(isbn, title, desc, false, null)))
+				new Book(isbn, title, desc, false, null))) {
 			System.out.println("New book added: " + title);
-		listAllBooks(request,response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianAddBook.jsp");
+			System.out.println("Send to dispatcher");
+			dispatcher.forward(request, response);
+		}
 	}
 	
 	private void updateBook(HttpServletRequest request, HttpServletResponse response) 
