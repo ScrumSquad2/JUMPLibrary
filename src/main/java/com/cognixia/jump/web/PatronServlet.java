@@ -124,6 +124,7 @@ public class PatronServlet extends HttpServlet {
 			response.sendRedirect("/JUMPLibrary");
 		List<Book> allBooks = bookDAO.getAllBooks();
 		request.setAttribute("allBooks", allBooks);
+		request.setAttribute("patron", patron);
 		System.out.println("allBooks: " + allBooks);
 		//TODO: change the jsp to the list jsp
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronBook.jsp");
