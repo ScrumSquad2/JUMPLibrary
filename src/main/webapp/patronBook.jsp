@@ -47,7 +47,7 @@
 						</c:choose>
 						
 						<c:choose>
-						<c:when test="${ book.rented == false }">
+						<c:when test="${ book.rented == false && patron.accountFrozen == false }">
 						<td>
 							<a href="addCheckout?isbn=<c:out value='${ book.isbn }' />">
 								<button class="btn btn-primary">Check Out</button>
