@@ -43,7 +43,8 @@
 							</c:choose>
 						</td>
 						<td>
-							<a href="freeze?id=<c:out value='${ product.id }' />">
+							<a href="<c:out value ="${ patron.accountFrozen == true ? 'unfreezePatron': 'freezePatron'}"/>
+							?patronId=<c:out value='${ patron.patronId }' />">
 								<button class="btn btn-primary">
 									<c:choose>
 										<c:when test="${ patron.accountFrozen == true }">Unfreeze</c:when>

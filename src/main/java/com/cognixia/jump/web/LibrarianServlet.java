@@ -21,8 +21,12 @@ import com.cognixia.jump.dao.BookDAOImpl;
 import com.cognixia.jump.dao.ItemNotFoundInDatabaseException;
 import com.cognixia.jump.dao.LibrarianDAO;
 import com.cognixia.jump.dao.LibrarianDAOImpl;
+import com.cognixia.jump.dao.PatronDAO;
+import com.cognixia.jump.dao.PatronDAOImpl;
+import com.cognixia.jump.dao.UsernameAlreadyExistsException;
 import com.cognixia.jump.model.Book;
 import com.cognixia.jump.model.Librarian;
+import com.cognixia.jump.model.Patron;
 
 
 
@@ -32,13 +36,16 @@ public class LibrarianServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private LibrarianDAO librarianDAO;
 	private BookDAO bookDAO;
+	private PatronDAO patronDAO;
 	private static Librarian librarian;
+	//private static Patron patron;
 	
 	@Override
 	public void init() {
 		// creates connection and the DAO once needed
 		librarianDAO = new LibrarianDAOImpl();
 		bookDAO = new BookDAOImpl();
+		patronDAO = new PatronDAOImpl();
 	}
 	
 	@Override
@@ -66,11 +73,26 @@ public class LibrarianServlet extends HttpServlet{
 		case "/updateBook":
 			updateBook(request,response);
 			break;
+		case "/listAllPatrons":
+			listAllPatrons(request,response);
+			break;
+		case "/freezePatron":
+			freezePatron(request, response);
+			break;
+		case "/unfreezePatron":
+			unfreezePatron(request, response);
+			break;
 		case "/loginLibrarian":
 			loginLibrarian(request,response);
 			break;
 		case "/logoutLibrarian":
 			logoutLibrarian(request,response);
+			break;
+		case "/updateLibrarian":
+			updateLibrarian(request,response);
+			break;
+		case "/editLibrarian":
+			editLibrarian(request, response);
 			break;
 		}
 	}
@@ -111,18 +133,13 @@ public class LibrarianServlet extends HttpServlet{
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
-		boolean rented = Boolean.parseBoolean(request.getParameter("rented"));
-		String addedToLibrary = request.getParameter("addedToLibrary");
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateAddedToLibrary = null;
-		try {
-			dateAddedToLibrary = (Date) format.parse(addedToLibrary);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		if(bookDAO.updateBook(
-				new Book(isbn, title, desc, rented, dateAddedToLibrary)))
+				new Book(isbn, title, desc, false, null))) {
 			System.out.println("Book updated: " + title);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianAddBook.jsp");
+			System.out.println("Send to dispatcher");
+			dispatcher.forward(request, response);
+		}
 	}
 	
 	/**private void addLibrarian(HttpServletRequest request, HttpServletResponse response) 
@@ -145,6 +162,46 @@ public class LibrarianServlet extends HttpServlet{
 		}
 	}
 	**/
+	
+	private void listAllPatrons(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		List<Patron> allPatrons = patronDAO.getAllPatrons();
+		request.setAttribute("allPatrons", allPatrons);
+		System.out.println("All Patrons: " + allPatrons);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianPatron.jsp");
+		System.out.println("Send to dispatcher");
+		dispatcher.forward(request, response);	
+	}
+	
+	private void freezePatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		int patronId = Integer.parseInt(request.getParameter("patronId"));
+		try {
+			Patron patron = patronDAO.getPatronById(patronId);
+			patronDAO.freezePatron(patron);
+		} catch (ItemNotFoundInDatabaseException e) {
+			e.printStackTrace();
+		}
+		listAllPatrons(request, response);
+	}
+	
+	private void unfreezePatron(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		int patronId = Integer.parseInt(request.getParameter("patronId"));
+		try {
+			Patron patron = patronDAO.getPatronById(patronId);
+			patronDAO.unfreezePatron(patron);
+		} catch (ItemNotFoundInDatabaseException e) {
+			e.printStackTrace();
+		}
+		listAllPatrons(request, response);
+	}
 	
 	private void loginLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
@@ -173,6 +230,35 @@ public class LibrarianServlet extends HttpServlet{
 		if (librarian != null)
 			librarian = null;
 		response.sendRedirect("/JUMPLibrary");
+	}
+	
+	private void updateLibrarian(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
+		try {
+			Librarian newLibrarian = new Librarian(librarian.getLibrarianId(), userName, password);
+			librarianDAO.updateLibrarian(newLibrarian);
+			librarian = newLibrarian;
+			System.out.println("Librarian :" + userName);
+			request.setAttribute("librarian", librarian);
+			request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
+		} catch (UsernameAlreadyExistsException e) {
+			request.setAttribute("librarian", librarian);
+			request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
+			e.printStackTrace();
+		}
+	}
+	
+	private void editLibrarian(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		request.setAttribute("librarian", librarian);
+		request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
+		
 	}
 	
 	@Override
