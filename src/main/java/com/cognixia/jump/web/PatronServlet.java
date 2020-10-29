@@ -104,7 +104,7 @@ public class PatronServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
-		boolean accountFrozen = false;
+		boolean accountFrozen = true;
 		
 		try {
 			Patron newPatron = new Patron(0, firstName, lastName, userName, password, accountFrozen);
