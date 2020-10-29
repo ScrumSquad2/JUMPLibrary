@@ -50,6 +50,9 @@ public class PatronServlet extends HttpServlet {
 		String action = request.getPathInfo();
 		System.out.println("action: " + action);
 		switch(action) {
+		case "/newPatron":
+			newPatron(request, response);
+			break;
 		case "/addPatron":
 			insertPatron(request, response);
 			break;
@@ -113,7 +116,10 @@ public class PatronServlet extends HttpServlet {
 			patron = newPatron;
 			listAllBooks(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			newPatron(request, response);
+			request.setAttribute("message", "UserName already exist, please try again");
+			System.out.println("Username alredy exist");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/patronSignup.jsp");
+			dispatcher.forward(request, response);
 			e.printStackTrace();
 		}
 	}
