@@ -25,6 +25,7 @@ import com.cognixia.jump.model.Book;
 import com.cognixia.jump.model.Librarian;
 
 
+
 @WebServlet("/librarian/*")
 public class LibrarianServlet extends HttpServlet{
 
@@ -66,6 +67,8 @@ public class LibrarianServlet extends HttpServlet{
 			break;
 		case "/loginLibrarian":
 			loginLibrarian(request,response);
+		case "/logoutLibrarian":
+			logoutLibrarian(request,response);
 		}
 	}
 	
@@ -89,17 +92,8 @@ public class LibrarianServlet extends HttpServlet{
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
-		boolean rented = Boolean.parseBoolean(request.getParameter("rented"));
-		String addedToLibrary = request.getParameter("addedToLibrary");
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateAddedToLibrary = null;
-		try {
-			dateAddedToLibrary = (Date) format.parse(addedToLibrary);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 		if (bookDAO.addBook(
-				new Book(isbn, title, desc, rented, dateAddedToLibrary)))
+				new Book(isbn, title, desc, false, null)))
 			System.out.println("New book added: " + title);
 	}
 	
@@ -124,6 +118,27 @@ public class LibrarianServlet extends HttpServlet{
 			System.out.println("Book updated: " + title);
 	}
 	
+	/**private void addLibrarian(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
+		
+		try {
+			Librarian newLibrarian = new Librarian(userName, password);
+			librarianDAO.addLibrarian(newLibrarian);
+			System.out.println("New librarian added: " + librarian);
+			librarian = newLibrarian ;
+			listAllBooks(request, response);
+		} catch (UsernameAlreadyExistsException e) {
+			newLibrarian(request, response);
+			e.printStackTrace();
+		}
+	}
+	**/
+	
 	private void loginLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		System.out.println("login");
@@ -144,6 +159,13 @@ public class LibrarianServlet extends HttpServlet{
 			librarian = null;
 			response.sendRedirect("/JUMPLibrary");
 		}	
+	}
+	
+	private void logoutLibrarian(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (librarian != null)
+			librarian = null;
+		response.sendRedirect("/JUMPLibrary");
 	}
 	
 	@Override
