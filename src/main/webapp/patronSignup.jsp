@@ -31,7 +31,7 @@
     }
 	.signup-form{
 		width: 390px;
-		margin: 30px auto;
+		margin: 10% auto;
 	}
 	.signup-form form{
 		color: #999;
@@ -93,8 +93,26 @@
 </style>
 </head>
 <body>
-<div class="signup-form">
-    <form action="patron/addPatron" method="post">
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+			$("#confirm_password").keyup(validate);
+		});
+
+		function validate() {
+			const password1 = $("#password").val();
+			const password2 = $("#confirm_password").val();
+
+			if (password1.localeCompare(password2)) {
+				$("#validate-status").text("invalid");
+				event.preventDefault();
+			} else {
+				$("#validate-status").text("");
+			}
+		}
+	</script>
+	<div class="signup-form">
+    <form action="patron/addPatron" method="post" onsubmit="validate()">
 		<h2>Sign Up as Patron</h2>
 		<p>Please fill in this form to create an account!</p>
 		<hr>
@@ -108,16 +126,17 @@
         	<input  class="form-control" name="userName" placeholder="username" required="required">
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required="required">
         </div>
 		<div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+            <input id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+        	<p style="color: red" id="validate-status"></p>
         </div>        
         <%-- <div class="form-group">
 			<label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
 		</div> --%>
 		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+            <button type="submit" on class="btn btn-primary btn-lg">Sign Up</button>
         </div>
     </form>
 	<div class="hint-text">Already have an account? <a href="<%= request.getContextPath() %>">Login here</a></div>

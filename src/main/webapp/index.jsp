@@ -51,17 +51,19 @@
 			<div style="padding: 1em 1em">
 				<c:choose>
 					<c:when test="${ librarian != true }">
-						<a href="<%=request.getContextPath()%>/patronSignin">Sign In</a> as Librarian	
+						Not a Patron? <a href="<%=request.getContextPath()%>/patronSignin">Sign In</a> as Librarian	
 			</c:when>
 					<c:otherwise>
-						<a href="<%=request.getContextPath()%>/librarianSignin">Sign
+						Not a Librarian? <a href="<%=request.getContextPath()%>/librarianSignin">Sign
 							In</a> as Patron
 			</c:otherwise>
 				</c:choose>
 			</div>
 			<button type="submit" class="btn btn-primary">Log In</button>
+			<c:if test="${ librarian != true }">
 			<button onclick="window.location.href='patronSignup.jsp' ;"
 				type="button" class="btn btn-secondary">Sign Up</button>
+			</c:if>
 			<br> <br>
 
 		</form>

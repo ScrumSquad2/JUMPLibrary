@@ -111,7 +111,6 @@ public class PatronServlet extends HttpServlet {
 			patronDAO.addPatron(newPatron);
 			System.out.println("Sucess add " + patron);
 			patron = newPatron;
-			
 			listAllBooks(request, response);
 		} catch (UsernameAlreadyExistsException e) {
 			newPatron(request, response);
