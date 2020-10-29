@@ -73,6 +73,9 @@ public class LibrarianServlet extends HttpServlet{
 		case "/updateBook":
 			updateBook(request,response);
 			break;
+		case "/editBook":
+			editBook(request, response);
+			break;
 		case "/listAllPatrons":
 			listAllPatrons(request,response);
 			break;
@@ -133,14 +136,33 @@ public class LibrarianServlet extends HttpServlet{
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
+		boolean rented = Boolean.parseBoolean(request.getParameter("rented"));
+//		Date addedToLibrary = new Date 
 		if(bookDAO.updateBook(
 				new Book(isbn, title, desc, false, null))) {
 			System.out.println("Book updated: " + title);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianAddBook.jsp");
-			System.out.println("Send to dispatcher");
-			dispatcher.forward(request, response);
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianAddBook.jsp");
+//			System.out.println("Send to dispatcher");
+//			dispatcher.forward(request, response);
 		}
+		listAllBooks(request, response);
 	}
+	
+	private void editBook(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		String isbn = request.getParameter("isbn");
+		try {
+			Book book = bookDAO.getBookByIsbn(isbn);
+			request.setAttribute("book", book);
+			request.getRequestDispatcher("/updateBook.jsp").forward(request, response);
+		} catch (ItemNotFoundInDatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
 	
 	/**private void addLibrarian(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
@@ -257,8 +279,7 @@ public class LibrarianServlet extends HttpServlet{
 		if (librarian == null)
 			response.sendRedirect("/JUMPLibrary");
 		request.setAttribute("librarian", librarian);
-		request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);	
 	}
 	
 	@Override

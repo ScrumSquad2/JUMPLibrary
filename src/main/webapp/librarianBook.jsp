@@ -43,7 +43,7 @@
 							<c:out value="${ book.addedToLibrary }"/>
 						</td>
 						<td>
-							<a href="updateBook?id=<c:out value='${ book.isbn }' />">
+							<a href="editBook?isbn=<c:out value='${ book.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 							</a>
 						</td>
