@@ -3,7 +3,7 @@
 	<div class="container">
 	
 		<br>
-		<h1 class="display-3">Book List</h1>
+		<h1 class="display-3">Book Catalogue</h1>
 		<br>
 		<div style="overflow: scroll; height: 675px;">
 		<table class="table table-striped">
@@ -13,7 +13,7 @@
 					<th>ISBN</th>
 					<th>Title</th>
 					<th>Description</th>
-					<th>Availability</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			
@@ -41,7 +41,7 @@
 						
 						<c:otherwise>
 						<td>
-							<c:out value="RENTED OUT"/>
+							<c:out value="RENTED"/>
 						</td>
 						</c:otherwise>
 						</c:choose>
