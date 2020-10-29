@@ -48,7 +48,15 @@
 				<label for="password">Password</label> <input type="password"
 					class="form-control" id="password" name="password" required>
 			</div>
-			<div style="padding: 1em 1em">
+
+			<button type="submit" class="btn btn-primary">Log In</button>
+			<c:if test="${ librarian != true }">
+			<button onclick="window.location.href='patronSignup.jsp' ;"
+				type="button" class="btn btn-secondary">Sign Up</button>
+			</c:if>
+			<br> <br>
+			
+						<div style="padding: 1em 1em">
 				<c:choose>
 					<c:when test="${ librarian != true }">
 						Not a Patron? <a href="<%=request.getContextPath()%>/patronSignin">Sign In</a> as Librarian	
@@ -59,13 +67,6 @@
 			</c:otherwise>
 				</c:choose>
 			</div>
-			<button type="submit" class="btn btn-primary">Log In</button>
-			<c:if test="${ librarian != true }">
-			<button onclick="window.location.href='patronSignup.jsp' ;"
-				type="button" class="btn btn-secondary">Sign Up</button>
-			</c:if>
-			<br> <br>
-
 		</form>
 
 	</div>
