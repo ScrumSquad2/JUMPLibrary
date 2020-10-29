@@ -46,12 +46,6 @@
 							<a href="edit?id=<c:out value='${ product.isbn }' />">
 								<button class="btn btn-primary">Edit</button>
 							</a>
-							
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							
-							<a href="delete?id=<c:out value='${ product.isbn }' />">
-								<button class="btn btn-danger">Delete</button>
-							</a>
 						</td>
 					</tr>
 				
