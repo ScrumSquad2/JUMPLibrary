@@ -31,9 +31,20 @@
 						<td>
 							<c:out value="${ patron.userName }"/>
 						</td>
+	
+						<c:choose>
+						<c:when test="${ patron.accountFrozen == false }">
 						<td>
-							<c:out value="${ patron.accountFrozen }"/>
+							<c:out value="Approved"/>
 						</td>
+						</c:when>
+						<c:otherwise>
+						<td>
+							<c:out value="Pending approval"/>
+						</td>
+						</c:otherwise>
+						</c:choose>
+						
 						<td>
 							<a href="<%=request.getContextPath()%>/patron/editPatron?id=<c:out value='${ patron.patronId }' />">
 								<button class="btn btn-primary">Update</button>
