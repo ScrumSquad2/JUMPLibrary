@@ -95,6 +95,7 @@ public class LibrarianServlet extends HttpServlet{
 		if (bookDAO.addBook(
 				new Book(isbn, title, desc, false, null)))
 			System.out.println("New book added: " + title);
+		listAllBooks(request,response);
 	}
 	
 	private void updateBook(HttpServletRequest request, HttpServletResponse response) 
