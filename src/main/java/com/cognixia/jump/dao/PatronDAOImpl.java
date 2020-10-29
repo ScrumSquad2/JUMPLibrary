@@ -176,5 +176,33 @@ public class PatronDAOImpl implements PatronDAO {
 		}
 		return false;
 	}
+	
+	public boolean freezePatron(Patron patron) {
+		return freezeUnfreezePatron(patron, true);
+	}
+	
+	public boolean unfreezePatron(Patron patron) {
+		return freezeUnfreezePatron(patron, false);
+	}
+	
+	public boolean freezeUnfreezePatron(Patron patron, boolean frz) {
+
+		try (PreparedStatement pstmt = conn.prepareStatement("update patron"
+				+ " set account_frozen = ? where patron_id = ?");) {
+
+			pstmt.setBoolean(1, frz);
+			pstmt.setInt(2, patron.getPatronId());
+			
+			int updated = pstmt.executeUpdate();
+			if (updated == 1) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }
