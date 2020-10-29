@@ -3,7 +3,7 @@
 	<div class="container">
 	
 		<br>
-		<h1 class="display-3">Book List</h1>
+		<h1 class="display-3">Book Catalog</h1>
 		<br>
 		
 		<table class="table table-striped">
