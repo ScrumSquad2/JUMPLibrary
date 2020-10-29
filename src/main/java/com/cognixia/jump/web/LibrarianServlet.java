@@ -137,9 +137,11 @@ public class LibrarianServlet extends HttpServlet{
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
 		boolean rented = Boolean.parseBoolean(request.getParameter("rented"));
-//		Date addedToLibrary = new Date 
+		String addedToLibrary = request.getParameter("addedToLibrary");
+		Date date = Date.valueOf(addedToLibrary);
+		System.out.println("date: " + date);
 		if(bookDAO.updateBook(
-				new Book(isbn, title, desc, false, null))) {
+				new Book(isbn, title, desc, rented, date))) {
 			System.out.println("Book updated: " + title);
 //			RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianAddBook.jsp");
 //			System.out.println("Send to dispatcher");
