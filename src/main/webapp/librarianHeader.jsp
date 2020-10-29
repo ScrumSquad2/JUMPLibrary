@@ -28,8 +28,6 @@
 					
 				<a class="nav-item nav-link" href="<%= request.getContextPath() %>/librarian/managePatrons">Manage Patrons</a>
 				
-				<a class="nav-item nav-link" href="<%= request.getContextPath()%>/librarian/updateBook">Update Book</a> 
-				
 			</div>
 
 	</nav>
