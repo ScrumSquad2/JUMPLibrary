@@ -10,8 +10,8 @@
 				<tr>
 					<th>ID</th>
 					<th>First Name</th>
+					<th>Last Name</th>
 					<th>User Name</th>
-					<th>Password</th>
 					<th>Status</th>
 				</tr>
 			</thead>
