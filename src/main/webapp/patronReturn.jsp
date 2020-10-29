@@ -22,7 +22,6 @@
 				<th>ISBN</th>
 				<th>Checked out Date</th>
 				<th>Due Date</th>
-				<th>Return Date</th>
 			</tr>
 		</thead>
 
