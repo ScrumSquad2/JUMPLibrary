@@ -116,11 +116,11 @@ public class PatronServlet extends HttpServlet {
 			patron = newPatron;
 			listAllBooks(request, response);
 		} catch (UsernameAlreadyExistsException e) {
-			request.setAttribute("message", "UserName already exist, please try again");
 			System.out.println("Username alredy exist");
+			final String message = "UserName already exist, please try again";
+			request.setAttribute("message", message);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/patronSignup.jsp");
 			dispatcher.forward(request, response);
-			e.printStackTrace();
 		}
 	}
 	

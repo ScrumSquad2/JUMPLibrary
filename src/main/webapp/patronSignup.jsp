@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,7 +160,7 @@ body {
 			<label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
 		</div> --%>
 				<div class="form-group">
-					<button type="submit" on class="btn btn-primary btn-lg">Sign
+					<button type="submit" class="btn btn-primary btn-lg">Sign
 						Up</button>
 				</div>
 			</form>
@@ -190,6 +190,7 @@ body {
 				$(this).alert('close');
 			});
 		}
+		
 		$(document).ready(function() {
 			$("#confirm_password").keyup(validate);
 		});
