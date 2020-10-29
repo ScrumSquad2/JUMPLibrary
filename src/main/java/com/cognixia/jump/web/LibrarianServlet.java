@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,19 +18,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.dao.BookDAO;
 import com.cognixia.jump.dao.BookDAOImpl;
+import com.cognixia.jump.dao.ItemNotFoundInDatabaseException;
 import com.cognixia.jump.dao.LibrarianDAO;
 import com.cognixia.jump.dao.LibrarianDAOImpl;
 import com.cognixia.jump.model.Book;
+import com.cognixia.jump.model.Librarian;
 
-@WebServlet("/librarian")
+
+@WebServlet("/librarian/*")
 public class LibrarianServlet extends HttpServlet{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private LibrarianDAO librarianDAO;
 	private BookDAO bookDAO;
+	private static Librarian librarian;
 	
 	@Override
 	public void init() {
@@ -53,18 +55,36 @@ public class LibrarianServlet extends HttpServlet{
 			throws ServletException, IOException{
 		String action = request.getServletPath();
 		switch(action) {
+		case "/listAllBooks":
+			listAllBooks(request,response);
 		case "/addBook":
 			addBook(request,response);
 			break;
 		case "/updateBook":
 			updateBook(request,response);
 			break;
+		case "/loginLibrarian":
+			loginLibrarian(request,response);
 		}
 	}
 	
 	// Note: Will add librarian functions after sending changes to master
+	private void listAllBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
+		List<Book> allBooks = bookDAO.getAllBooks();
+		request.setAttribute("allBooks", allBooks);
+		System.out.println("All Books: " + allBooks);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/librarianBook.jsp");
+		System.out.println("Send to dispatcher");
+		dispatcher.forward(request, response);
+	}
+	
 	private void addBook(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
@@ -84,6 +104,8 @@ public class LibrarianServlet extends HttpServlet{
 	
 	private void updateBook(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
+		if (librarian == null)
+			response.sendRedirect("/JUMPLibrary");
 		String isbn = request.getParameter("isbn");
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
@@ -99,6 +121,28 @@ public class LibrarianServlet extends HttpServlet{
 		if(bookDAO.updateBook(
 				new Book(isbn, title, desc, rented, dateAddedToLibrary)))
 			System.out.println("Book updated: " + title);
+	}
+	
+	private void loginLibrarian(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
+		System.out.println("login");
+		String userName = request.getParameter("username");
+		String password = request.getParameter("password");
+		try {
+			 librarian = librarianDAO.getLibrarianByUser(userName);
+			if (!librarian.getPassword().equals(password)) {
+				librarian = null;
+				System.out.println("Invalid password");
+				response.sendRedirect("/JUMPLibrary");
+			} else {
+				listAllBooks(request, response);
+			}
+		} catch (ItemNotFoundInDatabaseException e) {
+			e.printStackTrace();
+			System.out.println("Cannot find librarian");
+			librarian = null;
+			response.sendRedirect("/JUMPLibrary");
+		}	
 	}
 	
 	@Override
