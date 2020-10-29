@@ -186,7 +186,14 @@ public class PatronServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String newPassword = request.getParameter("new-password");
 		boolean accountFrozen = false;
+		if (!password.equals(patron.getPassword())) {
+			request.setAttribute("patron", patron);
+			request.getRequestDispatcher("/patron-form.jsp").forward(request, response);
+		} else if (newPassword != null && !newPassword.isEmpty()) {
+			password = newPassword;
+		}
 		
 		try {
 			Patron newPatron = new Patron(patronId, firstName, lastName, userName, password, accountFrozen);
