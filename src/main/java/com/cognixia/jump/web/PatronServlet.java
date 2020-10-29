@@ -104,7 +104,7 @@ public class PatronServlet extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
-		boolean accountFrozen = false;
+		boolean accountFrozen = true;
 		
 		try {
 			Patron newPatron = new Patron(0, firstName, lastName, userName, password, accountFrozen);
@@ -124,6 +124,7 @@ public class PatronServlet extends HttpServlet {
 			response.sendRedirect("/JUMPLibrary");
 		List<Book> allBooks = bookDAO.getAllBooks();
 		request.setAttribute("allBooks", allBooks);
+		request.setAttribute("patron", patron);
 		System.out.println("allBooks: " + allBooks);
 		//TODO: change the jsp to the list jsp
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/patronBook.jsp");
