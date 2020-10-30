@@ -38,9 +38,17 @@
 		</c:choose>
 
 		<br>
-		<form
-			action="${ librarian != null ? 'librarian/loginLibrarian' : 'patron/loginPatron' }"
-			method="post">
+<%-- 		<form
+			action="${ librarian != null ? '<%= request.getContextPath() %>librarian/loginLibrarian' : '<%= request.getContextPath() %>patron/loginPatron' }"
+			method="post"> --%>
+			<c:choose>
+			<c:when test="${ librarian == true }">
+			<form action="<%= request.getContextPath() %>/librarian/loginLibrarian" method="POST">
+			</c:when>
+			<c:otherwise>
+			<form action="<%= request.getContextPath() %>/patron/loginPatron" method="POST">
+			</c:otherwise>
+		</c:choose>
 			<div class="form-group">
 				<label for="userName">User Name</label> <input autocapitalize="off"
 					autocorrect="off" type="text" class="form-control" id="userName"

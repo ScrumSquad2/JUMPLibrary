@@ -239,6 +239,7 @@ public class LibrarianServlet extends HttpServlet{
 				librarian = null;
 				System.out.println("Invalid password");
 				request.setAttribute("message", MessageConstant.INVALID_PASSWORD);
+				request.setAttribute("librarian", true);
 				request.getRequestDispatcher("/index.jsp").forward(request, response);		
 			} else {
 				listAllBooks(request, response);
@@ -248,6 +249,7 @@ public class LibrarianServlet extends HttpServlet{
 			System.out.println("Cannot find librarian");
 			librarian = null;
 			request.setAttribute("message", MessageConstant.INVALID_USERNAME);
+			request.setAttribute("librarian", true);
 			request.getRequestDispatcher("/index.jsp").forward(request, response);		
 		}	
 	}

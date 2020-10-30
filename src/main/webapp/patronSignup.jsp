@@ -126,7 +126,7 @@ body {
 			</div>
 		</c:if>
 		<div class="signup-form">
-			<form action="patron/addPatron" method="post" onsubmit="validate()">
+			<form action="<%= request.getContextPath() %>/patron/addPatron" method="post" onsubmit="validate()">
 				<h2>Sign Up as Patron</h2>
 				<p>Please fill in this form to create an account!</p>
 				<hr>
