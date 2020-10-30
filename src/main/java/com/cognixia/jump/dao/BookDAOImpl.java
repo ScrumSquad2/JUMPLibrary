@@ -134,5 +134,33 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return false;
 	}
+	
+	@Override
+	public List<Book> getBooksByTitle(String searchTitle) {
 
+		ArrayList<Book> result = new ArrayList<Book>();
+
+		try (PreparedStatement pstmt = conn.prepareStatement("select * from book WHERE title LIKE ?");
+				) {
+			pstmt.setString(1, "%"+searchTitle+"%");
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String isbn = rs.getString("isbn");
+				String title = rs.getString("title");
+				String desc = rs.getString("descr");
+				boolean rented = rs.getBoolean("rented");
+				Date addedToLibrary = rs.getDate("added_to_library");
+
+				Book book = new Book(isbn, title, desc, rented, addedToLibrary);
+				result.add(book);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 }

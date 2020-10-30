@@ -3,6 +3,7 @@ package com.cognixia.jump.web;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -88,6 +89,9 @@ public class PatronServlet extends HttpServlet {
 			break;
 		case "/returnCheckout":
 			returnCheckout(request, response);
+			break;
+		case "/searchBooks":
+			searchBooks(request, response);
 			break;
 		default:
 			response.sendRedirect("/JUMPLibrary");
@@ -283,6 +287,30 @@ public class PatronServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		listCurrent(request, response);
+	}
+	
+	private void searchBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		String search = request.getParameter("search-books");
+		if (search == null || search.isEmpty()) {
+			listAllBooks(request, response);
+		} else if (search.length() == 10 && search.matches("[0-9]+")) {
+			try {
+				List<Book> allBooks = new ArrayList<>();
+				allBooks.add(bookDAO.getBookByIsbn(search));
+				request.setAttribute("allBooks", allBooks);
+				request.setAttribute("patron", patron);
+				request.getRequestDispatcher("/patronBook.jsp").forward(request, response);
+			} catch (ItemNotFoundInDatabaseException e) {
+				listAllBooks(request, response);
+			}
+		} else {
+			List<Book> allBooks = bookDAO.getBooksByTitle(search);
+			request.setAttribute("allBooks", allBooks);
+			request.setAttribute("patron", patron);
+			request.getRequestDispatcher("/patronBook.jsp").forward(request, response);
+		}
 	}
 	
 	@Override

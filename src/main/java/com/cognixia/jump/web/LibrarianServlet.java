@@ -3,6 +3,7 @@ package com.cognixia.jump.web;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -95,6 +96,12 @@ public class LibrarianServlet extends HttpServlet{
 		case "/editLibrarian":
 			editLibrarian(request, response);
 			break;
+		case "/searchBooks":
+			searchBooks(request, response);
+			break;
+		default:
+			response.sendRedirect("/JUMPLibrary");
+			break ;
 		}
 	}
 	
@@ -294,6 +301,28 @@ public class LibrarianServlet extends HttpServlet{
 			response.sendRedirect("/JUMPLibrary");
 		request.setAttribute("librarian", librarian);
 		request.getRequestDispatcher("/librarian-form.jsp").forward(request, response);	
+	}
+	
+	private void searchBooks(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		String search = request.getParameter("search-books");
+		if (search == null || search.isEmpty()) {
+			listAllBooks(request, response);
+		} else if (search.length() == 10 && search.matches("[0-9]+")) {
+			try {
+				List<Book> allBooks = new ArrayList<>();
+				allBooks.add(bookDAO.getBookByIsbn(search));
+				request.setAttribute("allBooks", allBooks);
+				request.getRequestDispatcher("/librarianBook.jsp").forward(request, response);
+			} catch (ItemNotFoundInDatabaseException e) {
+				listAllBooks(request, response);
+			}
+		} else {
+			List<Book> allBooks = bookDAO.getBooksByTitle(search);
+			request.setAttribute("allBooks", allBooks);
+			request.getRequestDispatcher("/librarianBook.jsp").forward(request, response);
+		}
 	}
 	
 	@Override

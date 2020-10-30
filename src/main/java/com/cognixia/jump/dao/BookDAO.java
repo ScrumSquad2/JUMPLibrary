@@ -15,5 +15,6 @@ public interface BookDAO {
 	public boolean deleteBookByIsbn(String isbn);
 	
 	public boolean updateBook(Book book);
-
+	
+	public List<Book> getBooksByTitle(String searchTitle);
 }
